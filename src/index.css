@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Near-monochrome, the way the Khvatov reference is: black, white, and one
+   accent used sparingly enough that it still means something when it appears.
+   --------------------------------------------------------------------------- */
+:root {
+  --bg: #0a0a0b;
+  --bg2: #0d0d0f;
+  --card: #111113;
+  --card2: #161619;
+  --fg: #f2f2f3;
+  --dim: #a1a1a6;
+  --faint: #86868b;
+  --rule: #1f1f22;
+  --rule2: #2e2e33;
+
+  --acc: #6ee787;
+  --acc-ink: #06210e;
+  --bad: #ff6b6b;
+
+  --sel: #16351f;
+  --sel-fg: #eaffef;
+}
+
+:root[data-accent="amber"] {
+  --acc: #e3b341;
+  --acc-ink: #241802;
+  --sel: #3a2a08;
+  --sel-fg: #fff6e2;
+}
+
+:root[data-accent="mono"] {
+  --acc: #f2f2f3;
+  --acc-ink: #0a0a0b;
+  --sel: #26262b;
+  --sel-fg: #ffffff;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--sel);
+  color: var(--sel-fg);
+}
+
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule2) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--rule2);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--faint);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ---------------------------------------------------------------------------
+   THE CURSOR
+   A terminal caret blinks. CLAUDE.md rules out continuous loops; Ramiro asked
+   for this one by name and it is the single detail that sells "you are in a
+   terminal", so the rule loses here. It still holds steady under reduced
+   motion — blinking is the one effect with a real accessibility cost.
+   --------------------------------------------------------------------------- */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  animation: blink 1.06s step-end infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Section and card fade-ins. One per element, fired once on entry, staggered
+   by --i. Content is visible by default when JS never runs (see the noscript
+   block in index.html) so nothing can hide the page.
+   --------------------------------------------------------------------------- */
+[data-fade] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 640ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+[data-fade][data-seen="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The hero paints itself on load rather than on scroll. */
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.boot-in {
+  opacity: 0;
+  animation: boot-in 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 110ms + 380ms);
+}
+
+@keyframes out-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.out-in {
+  animation: out-in 180ms ease-out both;
+}
+
+/* Height animation without measuring it. */
+.fold-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fold-grid[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+/* Section headings carry a rule that draws itself in as the heading arrives. */
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+[data-seen="true"] .rule-draw {
+  animation: rule-draw 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 180ms;
+  transform-origin: left;
+}
+.rule-draw {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .caret {
+    animation: none;
+    opacity: 1;
+  }
+  .boot-in,
+  [data-fade] {
+    opacity: 1;
+    transform: none;
+  }
+  .rule-draw {
+    transform: none;
+  }
+}
