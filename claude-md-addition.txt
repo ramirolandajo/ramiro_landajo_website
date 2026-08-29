@@ -8,8 +8,10 @@ revert them without asking.
 - **Blinking terminal caret** (`.caret` in `src/index.css`) — a continuous loop.
   Requested by name; it is what makes the hero read as a terminal. It holds
   solid under `prefers-reduced-motion`.
-- **Typewriter effect** on the hero prompt — limited to the six-character
-  command `whoami`. The headline itself is never typed.
+- **Typewriter effect** on the hero — the command `whoami`, and, since
+  2026-08-28, the headline itself: the cursor blinks alone on an empty line and
+  then writes the name out character by character. Ramiro asked for this
+  sequence directly. The rest of the hero waits for it and then fades in.
 - **Section numbers** (`// 01`, `// 02`, …) — the nav's own idiom, serving
   wayfinding rather than decoration.
 

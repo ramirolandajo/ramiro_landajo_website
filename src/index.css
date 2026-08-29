@@ -130,7 +130,9 @@ body {
   transform: none;
 }
 
-/* The hero paints itself on load rather than on scroll. */
+/* The hero paints itself on load rather than on scroll. Its supporting text
+   waits for the headline to finish writing itself, so the delay here is only
+   the stagger — the timing lives in useHeadlineBoot, not in CSS. */
 @keyframes boot-in {
   from {
     opacity: 0;
@@ -141,10 +143,10 @@ body {
     transform: none;
   }
 }
-.boot-in {
+.reveal-in {
   opacity: 0;
   animation: boot-in 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: calc(var(--i, 0) * 110ms + 380ms);
+  animation-delay: calc(var(--i, 0) * 110ms);
 }
 
 @keyframes out-in {
@@ -206,7 +208,7 @@ body {
     animation: none;
     opacity: 1;
   }
-  .boot-in,
+  .reveal-in,
   [data-fade] {
     opacity: 1;
     transform: none;

@@ -31,7 +31,7 @@ marks (lucide dropped GitHub/LinkedIn for trademark reasons).
 index.html                     fonts, meta, <noscript> fade-in fallback
 src/index.css                  ALL design tokens + every keyframe. Start here.
 src/App.tsx                    renders <Portfolio/>
-src/lib/typewriter.ts          types the hero's `whoami` command
+src/lib/typewriter.ts          types the `whoami` command + runs the hero boot sequence
 src/portfolio/
   data.ts                      ALL content. Bilingual {en,es}. Single source of truth.
   Portfolio.tsx                composition, scroll-spy, fade observer, lang/accent state
@@ -52,7 +52,7 @@ Six sections, numbered `// nav` in the Tamal Sen idiom:
 
 | # | id | What it is |
 |---|----|----|
-| 01 | `home` | Full-viewport terminal hero. Prompt types `whoami`, then **Backend** / **Developer** arrives offset, `clamp(2.9rem, 11.5vw, 9.5rem)`. Block caret blinks forever. |
+| 01 | `home` | Full-viewport terminal hero. Prompt types `whoami`, a block cursor appears on the empty line below and blinks alone, then **RAMIRO** / **LANDAJO** is written out one character at a time, offset, `clamp(2.9rem, 11.5vw, 9.5rem)`. The cursor rides the end of it and blinks forever after. |
 | 02 | `expertise` | Four areas in one bordered block, bodies wrapped in `<h3>…</h3>` code tags. Full grouped stack below. |
 | 03 | `experience` | Role cards, **technical first**, then other roles, then education / certs / languages. |
 | 04 | `projects` | Bento: `4 cols × 15rem rows`, one 2×2 anchor + one 2×1 + two 1×1. **Currently four empty marked slots.** |
@@ -82,8 +82,16 @@ robbowen.digital.
 
 Thesis: *the page paints itself the way a terminal paints a buffer.*
 
-- Hero: prompt types (58ms/char), headline arrives whole, caret blinks at
-  1.06s `step-end`.
+- Hero boot (`useHeadlineBoot`, `src/lib/typewriter.ts`) — four beats, in
+  terminal order: the command types (58ms/char) and its cursor goes out; 420ms
+  later a block cursor appears on the headline's line and blinks alone for
+  940ms; the name is written at 74ms/char, 260ms between the two lines, the
+  cursor solid while characters land; 240ms after the last one it resumes
+  blinking. Only then does the rest of the hero fade in (`.reveal-in`).
+  End to end, about 3.7s to the finished name, 4.4s to the last fade.
+- The headline's untyped remainder stays in the flow as `visibility: hidden`,
+  so the block is full size from the first frame and nothing below it moves.
+  Don't replace it with conditional rendering — the page will jump.
 - Sections/cards: fade + rise on entry, once, staggered `--i * 70ms`.
 - Section headings: an underline rule draws itself in.
 - **Every effect has a `prefers-reduced-motion` path.** The caret goes solid —
@@ -99,7 +107,7 @@ to over following the CLAUDE.md."* These are deliberate. **Do not "fix" them.**
 | Rule | Why it was overridden |
 |---|---|
 | No continuous looping animations | The blinking caret. Requested by name; it is what sells the terminal. Goes solid under reduced motion. |
-| No auto-typing hero headers | Only the 6-char command `whoami` types. The headline never does. |
+| No auto-typing hero headers | Both the command and the name type, on Ramiro's explicit request (2026-08-28). The whole hero is one boot sequence; see Motion. |
 | No section numbers (`01/02/03`) | They are the nav's own idiom and serve wayfinding. |
 
 ---

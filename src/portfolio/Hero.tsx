@@ -1,20 +1,60 @@
 import { ArrowDown, FileDown, Mail } from 'lucide-react'
 import { GithubMark, LinkedinMark } from './BrandIcons'
-import { useTypewriter } from '../lib/typewriter'
+import { useHeadlineBoot, useTypewriter } from '../lib/typewriter'
 import { identity, t, type Lang } from './data'
 
 /* ============================================================================
  * The hero — you are entering a terminal.
  *
- * A prompt types one short command, the answer arrives whole beneath it, and
- * the caret keeps blinking after everything has settled. The headline itself
- * is never typed: watching a page spell out its own title is the thing that
- * makes terminal portfolios insufferable.
+ * The page arrives empty. A prompt types one short command; below it a block
+ * cursor appears, blinks alone for a beat, and then writes the name out one
+ * character at a time. Only once the name is finished does the rest of the
+ * section fade in, and the cursor goes back to blinking where it started.
+ *
+ * The name typing itself is deliberate (see HANDOFF.md) — Ramiro asked for it
+ * by name. Everything holds still under `prefers-reduced-motion`.
  * ========================================================================== */
+
+/* One line of the headline. The untyped remainder stays in the flow, hidden,
+   so the block never changes size and nothing below it moves. */
+function Line({
+  full,
+  typed,
+  caret,
+  blink,
+}: {
+  full: string
+  typed: string
+  caret: boolean
+  blink: boolean
+}) {
+  return (
+    <>
+      {typed}
+      {caret ? (
+        <span
+          className={`${blink ? 'caret ' : ''}${typed ? 'ml-3 ' : ''}inline-block align-baseline text-[var(--acc)]`}
+        >
+          ▊
+        </span>
+      ) : null}
+      <span className="invisible">{full.slice(typed.length)}</span>
+    </>
+  )
+}
 
 export function Hero({ lang }: { lang: Lang }) {
   const cmd = useTypewriter('whoami')
-  const [top, bottom] = identity.display[lang]
+  const display = identity.display[lang]
+  const boot = useHeadlineBoot(display, cmd.done)
+
+  /* The supporting text waits for the name to finish writing itself. */
+  const shown = (i: number) => ({
+    style: { ['--i' as string]: i },
+    className: boot.done ? 'reveal-in' : 'opacity-0',
+  })
+  const meta = shown(0)
+  const scroll = shown(1)
 
   return (
     <section id="home" className="relative flex min-h-[100svh] flex-col justify-center px-4 pb-16 pt-32 sm:px-7">
@@ -27,30 +67,37 @@ export function Hero({ lang }: { lang: Lang }) {
           {!cmd.done ? <span className="caret text-[var(--acc)]">▊</span> : null}
         </p>
 
-        {/* the answer */}
+        {/* the answer, written out */}
         <div className="mt-7 sm:mt-10">
-          <h1 className="font-extrabold leading-[0.92] tracking-[-0.055em]">
-            <span
-              style={{ ['--i' as string]: 0 }}
-              className="boot-in block text-[clamp(2.9rem,11.5vw,9.5rem)]"
-            >
-              {top}
+          <h1
+            aria-label={display.join(' ')}
+            className="font-extrabold leading-[0.92] tracking-[-0.055em]"
+          >
+            <span aria-hidden="true" className="block text-[clamp(2.9rem,11.5vw,9.5rem)]">
+              <Line
+                full={display[0]}
+                typed={boot.out[0]}
+                caret={boot.caret === 0}
+                blink={!boot.typing}
+              />
             </span>
             <span
-              style={{ ['--i' as string]: 1 }}
-              className="boot-in block pl-[6%] text-[clamp(2.9rem,11.5vw,9.5rem)] md:pl-[18%]"
+              aria-hidden="true"
+              className="block pl-[6%] text-[clamp(2.9rem,11.5vw,9.5rem)] md:pl-[18%]"
             >
-              {bottom}
-              {cmd.done ? (
-                <span className="caret ml-3 inline-block align-baseline text-[var(--acc)]">▊</span>
-              ) : null}
+              <Line
+                full={display[1]}
+                typed={boot.out[1]}
+                caret={boot.caret === 1}
+                blink={!boot.typing}
+              />
             </span>
           </h1>
         </div>
 
         {/* meta + statement, the way the reference hangs small labels off a
             huge headline */}
-        <div style={{ ['--i' as string]: 2 }} className="boot-in mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <div style={meta.style} className={`${meta.className} mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto]`}>
           <div>
             <p className="max-w-[54ch] text-[0.94rem] leading-[1.8] text-[var(--dim)] sm:text-[1rem]">
               {t(identity.tagline, lang)}
@@ -100,7 +147,8 @@ export function Hero({ lang }: { lang: Lang }) {
 
       <a
         href="#expertise"
-        className="group/s absolute inset-x-0 bottom-7 mx-auto flex w-fit items-center gap-2 text-[0.7rem] text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]"
+        style={scroll.style}
+        className={`${scroll.className} group/s absolute inset-x-0 bottom-7 mx-auto flex w-fit items-center gap-2 text-[0.7rem] text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]`}
       >
         <ArrowDown size={13} aria-hidden="true" className="transition-transform duration-300 group-hover/s:translate-y-1" />
         {lang === 'es' ? 'seguí bajando' : 'scroll'}
