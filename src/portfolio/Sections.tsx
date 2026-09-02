@@ -157,11 +157,6 @@ export function Experience({ lang }: { lang: Lang }) {
 
       <div data-fade className="mb-6 mt-14 flex flex-wrap items-baseline gap-x-4">
         <h3 className="text-[1.15rem] font-bold tracking-[-0.02em]">{lang === 'es' ? 'Otros roles' : 'Other roles'}</h3>
-        <p className="text-[0.76rem] text-[var(--faint)]">
-          {lang === 'es'
-            ? 'no son de ingeniería — pero de ahí salió la ingeniería'
-            : 'not engineering — but where the engineering came from'}
-        </p>
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         {other.map((r, i) => (
@@ -304,7 +299,7 @@ export function ShellSection({
       <div data-fade className="flex h-[26rem] flex-col overflow-hidden rounded-xl border border-[var(--rule2)] bg-[var(--card)]">
         <div className="flex items-center gap-2 border-b border-[var(--rule)] px-4 py-2.5">
           <span className="text-[0.66rem] text-[var(--faint)]">
-            {identity.handle}@{identity.host}
+            system@{identity.host}
           </span>
           <span className="ml-auto text-[0.62rem] text-[var(--rule2)]">
             {lang === 'es' ? "escribí 'help'" : "type 'help'"}

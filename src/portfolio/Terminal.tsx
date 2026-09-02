@@ -226,7 +226,7 @@ export function Terminal({
   useEffect(() => {
     seq.current = 0
     setLines([
-      { id: seq.current++, kind: 'dim', text: `${identity.handle}@${identity.host} — ${lang === 'es' ? 'consola' : 'shell'}` },
+      { id: seq.current++, kind: 'dim', text: `${lang === 'es' ? 'Una consola funcional' : 'A working shell'}` },
       {
         id: seq.current++,
         kind: 'dim',
@@ -268,7 +268,7 @@ export function Terminal({
     setValue(next === -1 ? '' : history[next])
   }
 
-  const prompt = `${identity.handle}@${identity.host}:~$`
+  const prompt = `system@linux:~$`
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">

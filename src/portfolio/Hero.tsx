@@ -61,7 +61,7 @@ export function Hero({ lang }: { lang: Lang }) {
       <div className="mx-auto w-full max-w-[88rem]">
         {/* prompt */}
         <p className="text-[0.82rem] sm:text-[0.9rem]">
-          <span className="text-[var(--acc)]">ramiro@tigre</span>
+          <span className="text-[var(--acc)]">system@linux</span>
           <span className="text-[var(--faint)]">:~$ </span>
           <span className="text-[var(--fg)]">{cmd.out}</span>
           {!cmd.done ? <span className="caret text-[var(--acc)]">▊</span> : null}

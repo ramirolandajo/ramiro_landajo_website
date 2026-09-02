@@ -16,14 +16,14 @@ export const ls = (v: string | L, lang: Lang) => (typeof v === 'string' ? v : v[
 export const identity = {
   name: 'Ramiro Landajo',
   handle: 'ramirolandajo',
-  host: 'system',
+  host: 'linux',
   initials: 'RL',
-  role: { en: 'Backend Developer', es: 'Desarrollador Backend' },
+  role: { en: 'Software Developer', es: 'Desarrollador de Software' },
   display: { en: ['RAMIRO', 'LANDAJO'], es: ['RAMIRO', 'LANDAJO'] },
   greeting: { en: "Hello, I'm", es: 'Hola, soy' },
   tagline: {
-    en: 'Java · Spring Boot · REST APIs — and five years on the other side of the counter.',
-    es: 'Java · Spring Boot · APIs REST — y cinco años del otro lado del mostrador.',
+    en: 'Java · Spring Boot · REST APIs · AWS · React',
+    es: 'Java · Spring Boot · APIs REST · AWS · React',
   },
   location: { en: 'Tigre, Buenos Aires', es: 'Tigre, Buenos Aires' },
   country: 'Argentina',
@@ -40,8 +40,8 @@ export const identity = {
    away — the previous drafts read as a blog because this was four paragraphs. */
 export const story = {
   lede: {
-    en: 'I spent five years at a garden centre answering questions about stock, got tired of an order flow that broke every week, and started building tools to fix it. The same company later hired me to write its backend.',
-    es: 'Pasé cinco años en un vivero respondiendo consultas sobre stock, me cansé de un flujo de pedidos que se rompía cada semana, y empecé a construir herramientas para arreglarlo. La misma empresa después me contrató para escribir su backend.',
+    en: "I'm a software developer from Buenos Aires, with focus on Backend Development. I work mainly with Java and Spring Boot, build REST APIs, and handle SQL and NoSQL databases. I also do frontend with React.js and React Native.",
+    es: 'Soy un desarrollador de software de Buenos Aires, con foco en el desarrollo Backend. Trabajo principalmente con Java y Spring Boot, construyo APIs REST y manejo bases de datos SQL y NoSQL. También hago frontend con React.js y algo de React Native.',
   },
   more: [
     {
@@ -77,9 +77,9 @@ export const monogram = [
 ]
 
 export const now = {
-  headline: { en: 'Finishing the degree, looking for the next challenge.', es: 'Terminando la carrera, buscando el próximo desafío.' },
+  headline: { en: 'Finishing the degree in Software Engineering, looking for the next challenge.', es: 'Terminando la carrera de Ingeniería en Informática, buscando el próximo desafío.' },
   detail: {
-    en: 'Fifth year of Informatics Engineering at UADE. Available for backend or full-stack roles — Buenos Aires, or remote.',
+    en: 'Fifth year of Software Engineering at UADE. Available for backend or full-stack roles — Buenos Aires, or remote.',
     es: 'Quinto año de Ingeniería en Informática en UADE. Disponible para roles backend o full-stack — Buenos Aires, o remoto.',
   },
 } as const
