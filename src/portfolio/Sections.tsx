@@ -276,12 +276,10 @@ export function Projects({ lang }: { lang: Lang }) {
 export function ShellSection({
   lang,
   setLang,
-  setAccent,
   goto,
 }: {
   lang: Lang
   setLang: (l: Lang) => void
-  setAccent: (a: string) => void
   goto: (id: string) => void
 }) {
   return (
@@ -305,7 +303,7 @@ export function ShellSection({
             {lang === 'es' ? "escribí 'help'" : "type 'help'"}
           </span>
         </div>
-        <Terminal lang={lang} setLang={setLang} setAccent={setAccent} goto={goto} />
+        <Terminal lang={lang} setLang={setLang} goto={goto} />
       </div>
     </Section>
   )

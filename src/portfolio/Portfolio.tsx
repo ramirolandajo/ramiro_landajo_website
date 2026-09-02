@@ -4,29 +4,9 @@ import { Hero } from './Hero'
 import { Contact, Experience, Expertise, Projects, ShellSection } from './Sections'
 import { identity, nav, type Lang } from './data'
 
-const ACCENT_IDS = ['green', 'amber', 'mono']
-
 export default function Portfolio() {
   const [lang, setLang] = useState<Lang>('en')
   const [active, setActive] = useState('home')
-  const [accent, setAccent] = useState(() => {
-    try {
-      const saved = localStorage.getItem('rl.accent')
-      if (saved && ACCENT_IDS.includes(saved)) return saved
-    } catch {
-      /* storage blocked */
-    }
-    return 'green'
-  })
-
-  useEffect(() => {
-    document.documentElement.dataset.accent = accent
-    try {
-      localStorage.setItem('rl.accent', accent)
-    } catch {
-      /* non-fatal */
-    }
-  }, [accent])
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -84,14 +64,14 @@ export default function Portfolio() {
         {lang === 'es' ? 'Ir al contenido' : 'Skip to content'}
       </a>
 
-      <Nav lang={lang} setLang={setLang} accent={accent} setAccent={setAccent} active={active} />
+      <Nav lang={lang} setLang={setLang} active={active} />
 
       <main>
         <Hero lang={lang} />
         <Expertise lang={lang} />
         <Experience lang={lang} />
         <Projects lang={lang} />
-        <ShellSection lang={lang} setLang={setLang} setAccent={setAccent} goto={goto} />
+        <ShellSection lang={lang} setLang={setLang} goto={goto} />
         <Contact lang={lang} />
       </main>
 

@@ -34,7 +34,7 @@ src/App.tsx                    renders <Portfolio/>
 src/lib/typewriter.ts          types the `whoami` command + runs the hero boot sequence
 src/portfolio/
   data.ts                      ALL content. Bilingual {en,es}. Single source of truth.
-  Portfolio.tsx                composition, scroll-spy, fade observer, lang/accent state
+  Portfolio.tsx                composition, scroll-spy, fade observer, lang state
   Nav.tsx                      fixed nav, numbered `// name` items
   Hero.tsx                     section 01
   Section.tsx                  <Section> frame + <CodeFramed> + <Dot> primitives
@@ -68,9 +68,10 @@ robbowen.digital.
 
 - **Bilingual EN/ES.** Every user-facing string is `{ en, es }` in `data.ts`.
   Toggle in the nav. Ramiro is C2 Cambridge — the toggle is partly the point.
-- **Three accent themes** — `green` (default), `amber`, `mono`. Dots in the nav,
-  or `theme <name>` in the shell. Persists to `localStorage` under `rl.accent`.
-  Set on `<html data-accent>`; all four hues live in `src/index.css`.
+- **One accent: `green`.** The three-theme switcher (nav dots, the shell's
+  `theme` command, `data-accent` on `<html>`, `rl.accent` in `localStorage`) was
+  removed on 2026-09-02 — Ramiro's call. The accent hues live in `:root` in
+  `src/index.css`; the nav's top-right now holds the EN/ES toggle only.
 - **Near-monochrome.** Black, white, one accent used sparingly.
 - **Technical roles before non-technical ones.** Ramiro's explicit instruction.
 - **Contact = `mailto:` compose.** Chosen over Formspree/Web3Forms so it works

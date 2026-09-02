@@ -39,7 +39,6 @@ const HELP: Record<Lang, string[]> = {
     'edu             degrees and certifications',
     'contact         every way to reach me',
     'lang [en|es]    switch language',
-    'theme [green|amber|mono]',
     'clear',
   ],
   es: [
@@ -52,7 +51,6 @@ const HELP: Record<Lang, string[]> = {
     'edu             títulos y certificaciones',
     'contact         formas de contactarme',
     'lang [en|es]    cambiar idioma',
-    'theme [green|amber|mono]',
     'clear',
   ],
 }
@@ -60,7 +58,6 @@ const HELP: Record<Lang, string[]> = {
 type Ctx = {
   lang: Lang
   setLang: (l: Lang) => void
-  setAccent: (a: string) => void
   goto: (id: string) => void
 }
 
@@ -164,13 +161,6 @@ function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
       return { out: [O(next === 'es' ? 'idioma: español' : 'language: english', 'acc')] }
     }
 
-    case 'theme': {
-      const themes = ['green', 'amber', 'mono']
-      if (!themes.includes(arg)) return { out: [O(`${es ? 'temas' : 'themes'}: ${themes.join(', ')}`, arg ? 'err' : 'dim')] }
-      ctx.setAccent(arg)
-      return { out: [O(`theme: ${arg}`, 'acc')] }
-    }
-
     case 'clear':
       return { out: [], clear: true }
 
@@ -207,12 +197,10 @@ const TONE: Record<Line['kind'], string> = {
 export function Terminal({
   lang,
   setLang,
-  setAccent,
   goto,
 }: {
   lang: Lang
   setLang: (l: Lang) => void
-  setAccent: (a: string) => void
   goto: (id: string) => void
 }) {
   const [lines, setLines] = useState<Line[]>([])
@@ -247,7 +235,7 @@ export function Terminal({
       setHistory((h) => [raw, ...h].slice(0, 40))
       setHIdx(-1)
     }
-    const res = run(raw, { lang, setLang, setAccent, goto })
+    const res = run(raw, { lang, setLang, goto })
     if (res.clear) {
       setLines([])
       return
