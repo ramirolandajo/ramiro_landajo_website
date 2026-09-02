@@ -99,6 +99,9 @@ export function Hero({ lang }: { lang: Lang }) {
             huge headline */}
         <div style={meta.style} className={`${meta.className} mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto]`}>
           <div>
+            <p className="max-w-[54ch] text-[0.94rem] leading-[1.8] text-[var(--dim)] sm:text-[1.5rem]">
+              {t(identity.role, lang)}
+            </p>
             <p className="max-w-[54ch] text-[0.94rem] leading-[1.8] text-[var(--dim)] sm:text-[1rem]">
               {t(identity.tagline, lang)}
             </p>
