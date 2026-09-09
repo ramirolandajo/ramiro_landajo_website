@@ -1,0 +1,399 @@
+- generic [ref=e2]:
+  - link "Skip to content" [ref=e3] [cursor=pointer]:
+    - /url: "#home"
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "ramiro._" [ref=e6] [cursor=pointer]:
+        - /url: "#home"
+      - navigation "Sections" [ref=e7]:
+        - list [ref=e8]:
+          - listitem [ref=e9]:
+            - link "01 // home" [ref=e10] [cursor=pointer]:
+              - /url: "#home"
+              - generic [ref=e11]: "01"
+              - generic [ref=e12]: // home
+          - listitem [ref=e13]:
+            - link "02 // expertise" [ref=e14] [cursor=pointer]:
+              - /url: "#expertise"
+              - generic [ref=e15]: "02"
+              - generic [ref=e16]: // expertise
+          - listitem [ref=e17]:
+            - link "03 // experience" [ref=e18] [cursor=pointer]:
+              - /url: "#experience"
+              - generic [ref=e19]: "03"
+              - generic [ref=e20]: // experience
+          - listitem [ref=e21]:
+            - link "04 // projects" [ref=e22] [cursor=pointer]:
+              - /url: "#projects"
+              - generic [ref=e23]: "04"
+              - generic [ref=e24]: // projects
+          - listitem [ref=e25]:
+            - link "05 // shell" [ref=e26] [cursor=pointer]:
+              - /url: "#shell"
+              - generic [ref=e27]: "05"
+              - generic [ref=e28]: // shell
+          - listitem [ref=e29]:
+            - link "06 // contact" [ref=e30] [cursor=pointer]:
+              - /url: "#contact"
+              - generic [ref=e31]: "06"
+              - generic [ref=e32]: // contact
+      - generic [ref=e34]:
+        - button "en" [pressed] [ref=e35]
+        - button "es" [ref=e36]
+  - main [ref=e37]:
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - paragraph [ref=e40]: system@linux:~$ ▊
+        - heading "RAMIRO LANDAJO" [level=1] [ref=e42]
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - paragraph [ref=e47]: Software Developer
+            - paragraph [ref=e48]: Java · Spring Boot · REST APIs · AWS · React
+            - generic [ref=e49]:
+              - link "View CV" [ref=e50] [cursor=pointer]:
+                - /url: /Landajo_Ramiro_CV.pdf
+              - link "GitHub" [ref=e55] [cursor=pointer]:
+                - /url: https://github.com/ramirolandajo
+              - link "LinkedIn" [ref=e58] [cursor=pointer]:
+                - /url: https://linkedin.com/in/ramirolandajo
+              - link "Email" [ref=e61] [cursor=pointer]:
+                - /url: mailto:ramalandajo@gmail.com
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - term [ref=e67]: based in
+              - definition [ref=e68]: Tigre, Buenos Aires, Argentina
+            - generic [ref=e69]:
+              - term [ref=e70]: timezone
+              - definition [ref=e71]: Buenos Aires · UTC−3
+            - generic [ref=e72]:
+              - term [ref=e73]: status
+              - definition [ref=e74]: Open to work
+      - link "scroll" [ref=e75] [cursor=pointer]:
+        - /url: "#expertise"
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - paragraph [ref=e81]: // 02
+        - heading "Expertise" [level=2] [ref=e82]
+        - paragraph [ref=e83]: I'm a software developer from Buenos Aires, with focus on Backend Development. I work mainly with Java and Spring Boot, build REST APIs, and handle SQL and NoSQL databases. I also do frontend with React.js and React Native.
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - paragraph [ref=e86]: Java · Spring Boot
+          - heading "Backend Development" [level=3] [ref=e87]
+          - generic [ref=e89]:
+            - generic [ref=e90]: <h3>
+            - generic [ref=e91]: REST APIs with Spring Boot, JPA/Hibernate for persistence and Spring Security with JWT for auth. Shipped an internal tool at GardenLife on this stack.
+            - generic [ref=e92]: </h3>
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: SQL · NoSQL
+          - heading "Data & Persistence" [level=3] [ref=e95]
+          - generic [ref=e97]:
+            - generic [ref=e98]: <h3>
+            - generic [ref=e99]: Relational first — MySQL and SQL Server — and comfortable in MongoDB, Redis and Cassandra when the access pattern asks for something else.
+            - generic [ref=e100]: </h3>
+        - generic [ref=e101]:
+          - paragraph [ref=e102]: AWS · CI/CD
+          - heading "Cloud & Delivery" [level=3] [ref=e103]
+          - generic [ref=e105]:
+            - generic [ref=e106]: <h3>
+            - generic [ref=e107]: EC2, S3, RDS, VPC, CloudFront and Elastic Beanstalk, with GitHub Actions for CI and Terraform for the parts that should not be clicked.
+            - generic [ref=e108]: </h3>
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: React · React Native
+          - heading "Frontend & Mobile" [level=3] [ref=e111]
+          - generic [ref=e113]:
+            - generic [ref=e114]: <h3>
+            - generic [ref=e115]: React with Redux on the web and React Native on mobile, plus Firebase. Enough to build the whole thing myself when a project needs it.
+            - generic [ref=e116]: </h3>
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - paragraph [ref=e119]: Languages
+          - list [ref=e120]:
+            - listitem [ref=e121]: Java
+            - listitem [ref=e122]: JavaScript
+            - listitem [ref=e123]: SQL
+            - listitem [ref=e124]: Python
+        - generic [ref=e125]:
+          - paragraph [ref=e126]: Frameworks
+          - list [ref=e127]:
+            - listitem [ref=e128]: Spring Boot
+            - listitem [ref=e129]: Spring Security
+            - listitem [ref=e130]: JPA/Hibernate
+            - listitem [ref=e131]: React.js
+            - listitem [ref=e132]: React Native
+            - listitem [ref=e133]: Redux
+        - generic [ref=e134]:
+          - paragraph [ref=e135]: Databases
+          - list [ref=e136]:
+            - listitem [ref=e137]: MySQL
+            - listitem [ref=e138]: SQL Server
+            - listitem [ref=e139]: MongoDB
+            - listitem [ref=e140]: Redis
+            - listitem [ref=e141]: Cassandra
+        - generic [ref=e142]:
+          - paragraph [ref=e143]: Cloud & CI
+          - list [ref=e144]:
+            - listitem [ref=e145]: EC2
+            - listitem [ref=e146]: S3
+            - listitem [ref=e147]: Elastic Beanstalk
+            - listitem [ref=e148]: RDS
+            - listitem [ref=e149]: VPC
+            - listitem [ref=e150]: CloudFront
+            - listitem [ref=e151]: GitHub Actions
+            - listitem [ref=e152]: Terraform
+        - generic [ref=e153]:
+          - paragraph [ref=e154]: Tooling
+          - list [ref=e155]:
+            - listitem [ref=e156]: Linux
+            - listitem [ref=e157]: Git
+            - listitem [ref=e158]: GitHub
+            - listitem [ref=e159]: Firebase
+            - listitem [ref=e160]: REST
+            - listitem [ref=e161]: Microservices
+            - listitem [ref=e162]: JSON
+            - listitem [ref=e163]: HTML5
+            - listitem [ref=e164]: CSS3
+        - generic [ref=e165]:
+          - paragraph [ref=e166]: Ways of working
+          - list [ref=e167]:
+            - listitem [ref=e168]: Scrum
+            - listitem [ref=e169]: Kanban
+            - listitem [ref=e170]: TDD (basic)
+    - generic [ref=e172]:
+      - generic [ref=e173]:
+        - paragraph [ref=e174]: // 03
+        - heading "Experience" [level=2] [ref=e175]
+      - generic [ref=e176]:
+        - article [ref=e177]:
+          - generic [ref=e178]: 07/2025 — 02/2026
+          - heading "Java Backend Developer" [level=3] [ref=e180]
+          - paragraph [ref=e181]: GardenLife
+          - generic [ref=e183]:
+            - generic [ref=e184]: <p>
+            - generic [ref=e185]: Internal tooling in Java and Spring Boot, for the company whose order desk I had worked at for five years.
+            - generic [ref=e186]: </p>
+          - list [ref=e187]:
+            - listitem [ref=e188]: Java
+            - listitem [ref=e189]: Spring Boot
+            - listitem [ref=e190]: REST
+            - listitem [ref=e191]: Postman
+          - button "− less" [expanded] [ref=e192]
+          - list [ref=e195]:
+            - listitem [ref=e196]:
+              - generic [ref=e197]: ›
+              - generic [ref=e198]: Developed an internal tool using Java and Spring Boot.
+            - listitem [ref=e199]:
+              - generic [ref=e200]: ›
+              - generic [ref=e201]: Implemented REST APIs for internal data management and operations.
+            - listitem [ref=e202]:
+              - generic [ref=e203]: ›
+              - generic [ref=e204]: Tested and debugged features using Postman.
+        - article [ref=e205]:
+          - generic [ref=e206]:
+            - generic [ref=e207]: 09/2025 —
+            - generic [ref=e208]: current
+          - heading "Systems Support Assistant" [level=3] [ref=e210]
+          - paragraph [ref=e211]: Colegio Santa Teresa
+          - generic [ref=e213]:
+            - generic [ref=e214]: <p>
+            - generic [ref=e215]: Systems support for the staff of the school I graduated from.
+            - generic [ref=e216]: </p>
+          - list [ref=e217]:
+            - listitem [ref=e218]: Windows
+            - listitem [ref=e219]: Office
+            - listitem [ref=e220]: Networking
+          - button "− less" [expanded] [ref=e221]
+          - list [ref=e224]:
+            - listitem [ref=e225]:
+              - generic [ref=e226]: ›
+              - generic [ref=e227]: Technical support for staff using internal systems and digital tools.
+            - listitem [ref=e228]:
+              - generic [ref=e229]: ›
+              - generic [ref=e230]: Resolution of software, connectivity and application-configuration incidents.
+            - listitem [ref=e231]:
+              - generic [ref=e232]: ›
+              - generic [ref=e233]: Maintenance, updates and configuration of Windows systems and Office.
+      - heading "Other roles" [level=3] [ref=e235]
+      - generic [ref=e236]:
+        - article [ref=e237]:
+          - generic [ref=e238]: 07/2020 — 06/2025
+          - heading "Customer Service" [level=3] [ref=e240]
+          - paragraph [ref=e241]: GardenLife
+          - generic [ref=e243]:
+            - generic [ref=e244]: <p>
+            - generic [ref=e245]: "Where the backend work started: I automated the order flow I was stuck inside."
+            - generic [ref=e246]: </p>
+          - button "+ what I did" [ref=e247]
+          - list [ref=e248]:
+            - listitem [ref=e249]:
+              - generic [ref=e250]: ›
+              - generic [ref=e251]: Answered queries on catalogue, pricing and product availability.
+            - listitem [ref=e252]:
+              - generic [ref=e253]: ›
+              - generic [ref=e254]: Implemented digital tools to improve order flow and inventory tracking.
+        - article [ref=e255]:
+          - generic [ref=e256]:
+            - generic [ref=e257]: 04/2022 —
+            - generic [ref=e258]: current
+          - heading "Receptionist / Substitute Teacher" [level=3] [ref=e260]
+          - paragraph [ref=e261]: Colegio Santa Teresa
+          - generic [ref=e263]:
+            - generic [ref=e264]: <p>
+            - generic [ref=e265]: Reception and primary-level English teaching.
+            - generic [ref=e266]: </p>
+          - button "+ what I did" [ref=e267]
+          - list [ref=e268]:
+            - listitem [ref=e269]:
+              - generic [ref=e270]: ›
+              - generic [ref=e271]: Internal and external communication support for the primary school.
+            - listitem [ref=e272]:
+              - generic [ref=e273]: ›
+              - generic [ref=e274]: Taught English at primary level, adapting content across ability levels.
+            - listitem [ref=e275]:
+              - generic [ref=e276]: ›
+              - generic [ref=e277]: Coordinated school events and assisted with administrative work.
+      - heading "Education" [level=3] [ref=e279]
+      - generic [ref=e280]:
+        - generic [ref=e281]:
+          - heading "Informatics Engineering" [level=4] [ref=e285]
+          - paragraph [ref=e286]: Universidad Argentina de la Empresa
+          - paragraph [ref=e287]: 2022 — 2026
+          - paragraph [ref=e288]: in progress · 5th year
+        - generic [ref=e290]:
+          - heading "Software Development" [level=4] [ref=e294]
+          - paragraph [ref=e295]: Universidad Argentina de la Empresa
+          - paragraph [ref=e296]: 2022 — 2024
+          - paragraph [ref=e297]: completed
+        - generic [ref=e298]:
+          - heading "Secondary — Exact Sciences" [level=4] [ref=e302]
+          - paragraph [ref=e303]: Colegio Santa Teresa
+          - paragraph [ref=e304]: 2016 — 2020
+          - paragraph [ref=e305]: completed
+      - generic [ref=e306]:
+        - generic [ref=e307]:
+          - paragraph [ref=e308]: certification
+          - heading "Java / SQL" [level=4] [ref=e309]
+          - paragraph [ref=e310]: CoderHouse
+          - paragraph [ref=e311]: Microservices, REST APIs, Spring Boot
+        - generic [ref=e312]:
+          - paragraph [ref=e313]: certification
+          - heading "Application Development" [level=4] [ref=e314]
+          - paragraph [ref=e315]: CoderHouse
+          - paragraph [ref=e316]: React Native, Redux, Firebase
+      - generic [ref=e317]:
+        - generic [ref=e318]:
+          - generic [ref=e319]: Spanish
+          - generic [ref=e320]: Native
+          - generic [ref=e321]: first language
+        - generic [ref=e322]:
+          - generic [ref=e323]: English
+          - generic [ref=e324]: C2
+          - generic [ref=e325]: Cambridge Proficiency (CPE)
+    - generic [ref=e327]:
+      - generic [ref=e328]:
+        - paragraph [ref=e329]: // 04
+        - heading "Projects" [level=2] [ref=e330]
+        - paragraph [ref=e331]: Four slots, waiting for real work. Nothing invented goes here — a recruiter can tell, and so can you.
+      - generic [ref=e332]:
+        - article [ref=e333]:
+          - generic [ref=e334]: "01"
+          - generic [ref=e337]:
+            - paragraph [ref=e338]: "[ PROJECT 01 ]"
+            - paragraph [ref=e339]: Your strongest project. The one you would happily be interviewed about for an hour.
+            - paragraph [ref=e340]: // name · stack · what it does · one architecture decision · repo or demo · a screenshot
+        - article [ref=e341]:
+          - generic [ref=e342]: "02"
+          - generic [ref=e345]:
+            - paragraph [ref=e346]: "[ PROJECT 02 ]"
+            - paragraph [ref=e347]: The GardenLife internal tool — Spring Boot, REST APIs, Postman.
+            - paragraph [ref=e348]: // what it replaced · endpoints · who uses it
+        - article [ref=e349]:
+          - generic [ref=e350]: "03"
+          - generic [ref=e353]:
+            - paragraph [ref=e354]: "[ PROJECT 03 ]"
+            - paragraph [ref=e355]: University coursework worth showing — OS, compilers, distributed systems.
+            - paragraph [ref=e356]: // course · language · the hard part
+        - article [ref=e357]:
+          - generic [ref=e358]: "04"
+          - generic [ref=e361]:
+            - paragraph [ref=e362]: "[ PROJECT 04 ]"
+            - paragraph [ref=e363]: Anything you built for yourself. Small is fine — finished is what counts.
+            - paragraph [ref=e364]: // why you built it · stack · link
+    - generic [ref=e366]:
+      - generic [ref=e367]:
+        - paragraph [ref=e368]: // 05
+        - heading "Shell" [level=2] [ref=e369]
+        - paragraph [ref=e370]: A real shell. Everything it does is also a click somewhere else. Learn more about me!
+      - generic [ref=e371]:
+        - generic [ref=e372]:
+          - generic [ref=e373]: system@linux
+          - generic [ref=e374]: type 'help'
+        - generic [ref=e375]:
+          - generic [ref=e376]:
+            - paragraph [ref=e377]: A working shell
+            - paragraph [ref=e378]: try 'help', 'neofetch' or 'whoami'.
+          - generic [ref=e379]:
+            - generic [ref=e380]: system@linux:~$
+            - textbox "Type a command" [ref=e381]:
+              - /placeholder: help
+    - generic [ref=e383]:
+      - generic [ref=e384]:
+        - paragraph [ref=e385]: // 06
+        - heading "Contact" [level=2] [ref=e386]
+      - generic [ref=e387]:
+        - generic [ref=e388]:
+          - generic [ref=e389]:
+            - generic [ref=e390]:
+              - generic [ref=e391]: Your name
+              - textbox "Your name" [ref=e392]:
+                - /placeholder: Ada Lovelace
+            - generic [ref=e393]:
+              - generic [ref=e394]: Your email
+              - textbox "Your email" [ref=e395]:
+                - /placeholder: ada@example.com
+          - generic [ref=e396]:
+            - generic [ref=e397]: Subject(optional)
+            - textbox "Subject(optional)" [ref=e398]:
+              - /placeholder: Junior backend role
+          - generic [ref=e399]:
+            - generic [ref=e400]: Message
+            - textbox "Message" [ref=e401]:
+              - /placeholder: Tell me what you have in mind…
+          - generic [ref=e402]:
+            - button "Compose email" [ref=e403]
+            - button "ramalandajo@gmail.com" [ref=e404]
+          - paragraph [ref=e408]
+        - generic [ref=e409]:
+          - list [ref=e410]:
+            - listitem [ref=e411]:
+              - link "GitHub github.com/ramirolandajo" [ref=e412] [cursor=pointer]:
+                - /url: https://github.com/ramirolandajo
+                - generic [ref=e413]:
+                  - generic [ref=e414]: GitHub
+                  - generic [ref=e415]: github.com/ramirolandajo
+            - listitem [ref=e419]:
+              - link "LinkedIn linkedin.com/in/ramirolandajo" [ref=e420] [cursor=pointer]:
+                - /url: https://linkedin.com/in/ramirolandajo
+                - generic [ref=e421]:
+                  - generic [ref=e422]: LinkedIn
+                  - generic [ref=e423]: linkedin.com/in/ramirolandajo
+            - listitem [ref=e427]:
+              - link "Email ramalandajo@gmail.com" [ref=e428] [cursor=pointer]:
+                - /url: mailto:ramalandajo@gmail.com
+                - generic [ref=e429]:
+                  - generic [ref=e430]: Email
+                  - generic [ref=e431]: ramalandajo@gmail.com
+            - listitem [ref=e435]:
+              - link "Résumé Landajo_Ramiro_CV.pdf" [ref=e436] [cursor=pointer]:
+                - /url: /Landajo_Ramiro_CV.pdf
+                - generic [ref=e437]:
+                  - generic [ref=e438]: Résumé
+                  - generic [ref=e439]: Landajo_Ramiro_CV.pdf
+          - generic [ref=e443]:
+            - paragraph [ref=e444]: available
+            - paragraph [ref=e446]: Open to work
+            - paragraph [ref=e447]: Tigre, Buenos Aires, Argentina · UTC−3
+  - contentinfo [ref=e448]:
+    - generic [ref=e449]:
+      - generic [ref=e450]: © 2026 Ramiro Landajo
+      - generic [ref=e451]: ramirolandajo@linux_
+      - generic [ref=e452]: React · Vite · Tailwind

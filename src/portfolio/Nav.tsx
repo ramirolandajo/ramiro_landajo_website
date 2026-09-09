@@ -1,22 +1,12 @@
 import { identity, nav, type Lang } from './data'
 
-const ACCENTS = [
-  { id: 'green', swatch: '#6ee787' },
-  { id: 'amber', swatch: '#e3b341' },
-  { id: 'mono', swatch: '#f2f2f3' },
-]
-
 export function Nav({
   lang,
   setLang,
-  accent,
-  setAccent,
   active,
 }: {
   lang: Lang
   setLang: (l: Lang) => void
-  accent: string
-  setAccent: (a: string) => void
   active: string
 }) {
   return (
@@ -58,26 +48,6 @@ export function Nav({
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-3">
-          <div
-            className="flex items-center gap-1.5"
-            role="group"
-            aria-label={lang === 'es' ? 'Color de acento' : 'Accent colour'}
-          >
-            {ACCENTS.map((a) => (
-              <button
-                key={a.id}
-                type="button"
-                onClick={() => setAccent(a.id)}
-                aria-pressed={accent === a.id}
-                aria-label={a.id}
-                style={{ background: a.swatch }}
-                className={`h-2.5 w-2.5 rounded-full transition-transform duration-200 hover:scale-125 ${
-                  accent === a.id ? 'ring-2 ring-[var(--fg)] ring-offset-2 ring-offset-[var(--bg)]' : 'opacity-50'
-                }`}
-              />
-            ))}
-          </div>
-
           <div className="flex overflow-hidden rounded-full border border-[var(--rule2)]">
             {(['en', 'es'] as const).map((l) => (
               <button

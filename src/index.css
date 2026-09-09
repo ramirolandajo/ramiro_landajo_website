@@ -27,20 +27,6 @@
   --sel-fg: #eaffef;
 }
 
-:root[data-accent="amber"] {
-  --acc: #e3b341;
-  --acc-ink: #241802;
-  --sel: #3a2a08;
-  --sel-fg: #fff6e2;
-}
-
-:root[data-accent="mono"] {
-  --acc: #f2f2f3;
-  --acc-ink: #0a0a0b;
-  --sel: #26262b;
-  --sel-fg: #ffffff;
-}
-
 html {
   color-scheme: dark;
   background: var(--bg);
