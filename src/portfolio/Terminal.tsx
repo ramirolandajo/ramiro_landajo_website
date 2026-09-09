@@ -214,7 +214,7 @@ export function Terminal({
   useEffect(() => {
     seq.current = 0
     setLines([
-      { id: seq.current++, kind: 'dim', text: `${lang === 'es' ? 'Una consola funcional' : 'A working shell'}` },
+      { id: seq.current++, kind: 'dim', text: `${lang === 'es' ? 'Descubrí más sobre mí con ésta consola funcional' : 'Find out more about me with this working shell!'}` },
       {
         id: seq.current++,
         kind: 'dim',

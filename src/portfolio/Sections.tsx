@@ -36,21 +36,23 @@ export function Expertise({ lang }: { lang: Lang }) {
       {/* gap-px over a ruled background draws the dividers, so the hairlines
           stay correct at every breakpoint without nth-child gymnastics. */}
       <div className="grid gap-px overflow-hidden rounded-xl border border-[var(--rule2)] bg-[var(--rule)] md:grid-cols-2 xl:grid-cols-4">
-        {expertise.map((a, i) => (
+        {expertise.map((area, i) => (
           <div
-            key={a.id}
+            key={area.id}
             data-fade
             style={{ ['--i' as string]: i }}
-            className="group/e bg-[var(--bg)] p-6 transition-colors duration-300 hover:bg-[var(--card)]"
+            className="group/e bg-[var(--bg)] p-7 transition-colors duration-300 hover:bg-[var(--card)] sm:p-8"
           >
-            <p className="text-[0.62rem] uppercase tracking-[0.18em] text-[var(--rule2)]">{a.sub}</p>
+            <p className="text-[0.62rem] uppercase tracking-[0.18em] text-[var(--acc)]">{area.sub}</p>
             <h3 className="mt-3 inline-block text-[1.05rem] font-bold leading-snug">
-              <span className="bg-[var(--acc)] bg-[length:100%_0.28em] bg-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-300 group-hover/e:bg-[length:100%_0.5em]">
-                {t(a.title, lang)}
+              {/* solid marker chip: --acc-ink on --acc reads ~12:1, where the
+                  old white-on-green sat at 1.5:1 and was effectively unreadable. */}
+              <span className="inline-block rounded-[3px] bg-[var(--acc)] px-2 py-1 text-[var(--acc-ink)]">
+                {t(area.title, lang)}
               </span>
             </h3>
             <div className="mt-5">
-              <CodeFramed tag="h3">{t(a.body, lang)}</CodeFramed>
+              <CodeFramed tag="h3">{t(area.body, lang)}</CodeFramed>
             </div>
           </div>
         ))}
@@ -196,7 +198,7 @@ export function Experience({ lang }: { lang: Lang }) {
             key={c.org + ls(c.name, 'en')}
             data-fade
             style={{ ['--i' as string]: i }}
-            className="rounded-xl border border-[var(--rule)] bg-[var(--card)] p-5"
+            className="rounded-xl border border-[var(--wrule)] bg-[var(--card)] p-5"
           >
             <p className="text-[0.6rem] uppercase tracking-[0.16em] text-[var(--faint)]">
               {lang === 'es' ? 'certificación' : 'certification'}

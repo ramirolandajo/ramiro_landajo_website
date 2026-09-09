@@ -191,29 +191,29 @@ export const stack: StackGroup[] = [
 export const education = [
   {
     id: 'uade-eng',
-    title: { en: 'Informatics Engineering', es: 'Ingeniería en Informática' },
+    title: {en: 'Software Engineering', es: 'Ingeniería en Informática'},
     org: 'Universidad Argentina de la Empresa',
     period: '2022 — 2026',
-    state: { en: 'in progress · 5th year', es: 'en curso · 5.º año' },
+    state: {en: 'in progress · 5th year', es: 'en curso · 5.º año'},
     current: true,
   },
   {
     id: 'uade-tec',
-    title: { en: 'Software Development', es: 'Tecnicatura en Desarrollo de Software' },
+    title: {en: "Software Development - Associate's Degree", es: 'Tecnicatura en Desarrollo de Software'},
     org: 'Universidad Argentina de la Empresa',
     period: '2022 — 2024',
-    state: { en: 'completed', es: 'finalizado' },
+    state: {en: 'completed', es: 'finalizado'},
     current: false,
   },
   {
     id: 'santateresa',
-    title: { en: 'Secondary — Exact Sciences', es: 'Bachillerato — Ciencias Exactas' },
+    title: {en: 'High School Diploma — Exact Sciences', es: 'Bachillerato — Ciencias Exactas'},
     org: 'Colegio Santa Teresa',
     period: '2016 — 2020',
-    state: { en: 'completed', es: 'finalizado' },
+    state: {en: 'completed', es: 'finalizado'},
     current: false,
   },
-]
+];
 
 export const certifications = [
   { name: 'Java / SQL', org: 'CoderHouse', detail: { en: 'Microservices, REST APIs, Spring Boot', es: 'Microservicios, API REST, Spring Boot' } },
