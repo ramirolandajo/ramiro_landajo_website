@@ -139,23 +139,27 @@ export default function Layout() {
 
       <Nav lang={lang} setLang={setLang} active={active} onOpenShell={() => setShellOpen(true)} />
 
-      {/* tabIndex so the skip link actually moves focus and not just scroll. */}
-      <main id="main" tabIndex={-1}>
-        <Outlet context={lang satisfies Lang} />
-      </main>
+      {/* A sticky-footer column, so a page can ask for the whole viewport
+          without the footer pushing it into a scroll. tabIndex is so the skip
+          link actually moves focus and not just scroll. */}
+      <div className="flex min-h-[100svh] flex-col">
+        <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
+          <Outlet context={lang satisfies Lang} />
+        </main>
 
-      <footer className="border-t border-[var(--rule)]">
-        <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-8 text-[0.68rem] text-[var(--faint)] sm:px-7">
-          <span>
-            © {new Date().getFullYear()} {identity.name}
-          </span>
-          <span className="text-[var(--rule2)]">
-            {identity.handle}@{identity.host}
-            <span className="caret text-[var(--acc)]">_</span>
-          </span>
-          <span className="ml-auto">React · Vite · Tailwind</span>
-        </div>
-      </footer>
+        <footer className="border-t border-[var(--rule)]">
+          <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-8 text-[0.68rem] text-[var(--faint)] sm:px-7">
+            <span>
+              © {new Date().getFullYear()} {identity.name}
+            </span>
+            <span className="text-[var(--rule2)]">
+              {identity.handle}@{identity.host}
+              <span className="caret text-[var(--acc)]">_</span>
+            </span>
+            <span className="ml-auto">React · Vite · Tailwind</span>
+          </div>
+        </footer>
+      </div>
 
       <ShellDialog
         open={shellOpen}

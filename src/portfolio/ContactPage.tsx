@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { ArrowUpRight, Check, Copy, MoveLeft } from 'lucide-react'
-import { Dot, Section } from './Section'
+import { Dot } from './Section'
 import { identity, links, ls, t, type Lang } from './data'
 
 /* The form composes a mailto: — no backend, no third party, works on deploy.
@@ -59,18 +59,15 @@ function ContactForm({ lang }: { lang: Lang }) {
     'w-full rounded-lg border bg-[var(--bg)] px-3.5 py-3 text-[0.82rem] text-[var(--fg)] outline-none transition-colors duration-200 placeholder:text-[var(--rule2)]'
 
   return (
-    <Section
-      id="contact"
-      n="05"
-      title={lang === 'es' ? 'Contacto' : 'Contact'}
-    >
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <form
-          data-fade
-          onSubmit={submit}
-          noValidate
-          className="rounded-xl border border-[var(--rule)] bg-[var(--card)] p-6 sm:p-8"
-        >
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+      {/* Natural height. Stretching the form to fill the viewport turned the
+          message box into a 450px pit; the page centres instead. */}
+      <form
+        data-fade
+        onSubmit={submit}
+        noValidate
+        className="flex flex-col rounded-xl border border-[var(--rule)] bg-[var(--card)] p-6 sm:p-7"
+      >
           <div className="grid gap-5 sm:grid-cols-2">
             {(
               [
@@ -126,13 +123,13 @@ function ContactForm({ lang }: { lang: Lang }) {
             <textarea
               id="f-message"
               name="message"
-              rows={5}
+              rows={4}
               value={values.message}
               onChange={set('message')}
               placeholder={lang === 'es' ? 'Contame en qué estás pensando…' : 'Tell me what you have in mind…'}
               aria-invalid={errors.message ? true : undefined}
               aria-describedby={errors.message ? 'e-message' : undefined}
-              className={`${field} mt-2 resize-y ${errors.message ? 'border-[var(--bad)]' : 'border-[var(--rule2)] focus:border-[var(--acc)]'}`}
+              className={`${field} mt-2 h-[clamp(7rem,19vh,15rem)] resize-y ${errors.message ? 'border-[var(--bad)]' : 'border-[var(--rule2)] focus:border-[var(--acc)]'}`}
             />
             {errors.message ? (
               <p id="e-message" className="mt-1.5 text-[0.7rem] text-[var(--bad)]">
@@ -141,7 +138,7 @@ function ContactForm({ lang }: { lang: Lang }) {
             ) : null}
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               type="submit"
               className="inline-flex items-center gap-2 rounded-lg bg-[var(--acc)] px-5 py-3 text-[0.8rem] font-bold text-[var(--acc-ink)] transition-transform duration-200 hover:-translate-y-0.5"
@@ -158,7 +155,7 @@ function ContactForm({ lang }: { lang: Lang }) {
             </button>
           </div>
 
-          <p aria-live="polite" className="mt-4 min-h-[1.2rem] text-[0.72rem] text-[var(--faint)]">
+          <p aria-live="polite" className="mt-3 min-h-[1.1rem] text-[0.72rem] text-[var(--faint)]">
             {sent
               ? lang === 'es'
                 ? '¿No se abrió tu aplicación de mail? Copiá la dirección de arriba.'
@@ -167,7 +164,7 @@ function ContactForm({ lang }: { lang: Lang }) {
           </p>
         </form>
 
-        <div data-fade style={{ ['--i' as string]: 1 }} className="flex flex-col gap-4">
+        <div data-fade style={{ ['--i' as string]: 1 }} className="flex flex-col gap-3">
           <ul className="grid gap-3">
             {links.map((l) => (
               <li key={l.id}>
@@ -175,7 +172,7 @@ function ContactForm({ lang }: { lang: Lang }) {
                   href={l.href}
                   target={l.href.startsWith('http') ? '_blank' : undefined}
                   rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="group/l flex items-center justify-between gap-3 rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-4 transition-colors duration-200 hover:border-[var(--acc)]"
+                  className="group/l flex items-center justify-between gap-3 rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-3.5 transition-colors duration-200 hover:border-[var(--acc)]"
                 >
                   <span className="min-w-0">
                     <span className="block text-[0.8rem] font-bold">{ls(l.label, lang)}</span>
@@ -191,7 +188,7 @@ function ContactForm({ lang }: { lang: Lang }) {
             ))}
           </ul>
 
-          <div className="rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-4">
+          <div className="mt-auto rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-3.5">
             <p className="inline-flex items-center gap-2 text-[0.66rem] uppercase tracking-[0.14em] text-[var(--acc)]">
               <Dot /> {lang === 'es' ? 'disponible' : 'available'}
             </p>
@@ -200,9 +197,8 @@ function ContactForm({ lang }: { lang: Lang }) {
               {t(identity.location, lang)}, {identity.country} · UTC−3
             </p>
           </div>
-        </div>
       </div>
-    </Section>
+    </div>
   )
 }
 
@@ -226,22 +222,36 @@ export default function ContactPage() {
         }
       />
 
-      {/* Clears the fixed header, which is two rows tall on mobile. */}
-      <div className="pt-24 sm:pt-28" />
-      <ContactForm lang={lang} />
+      {/* One screen, not a section of a scroll. flex-1 fills the space Layout
+          leaves between the header and the footer, and the content is centred
+          in it — the <Section> rhythm is built for a long page and left a
+          third of this one empty. */}
+      <div className="mx-auto flex w-full max-w-[88rem] flex-1 flex-col justify-center px-4 pb-7 pt-24 sm:px-7 sm:pt-28">
+        <div data-fade className="mb-6">
+          <p className="text-[0.72rem] text-[var(--faint)]">
+            <span className="text-[var(--rule2)]">// </span>
+            <span className="text-[var(--acc)]">05</span>
+          </p>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+            <h1 className="text-[clamp(1.9rem,4.2vw,2.9rem)] font-extrabold leading-[1] tracking-[-0.045em]">
+              {es ? 'Contacto' : 'Contact'}
+            </h1>
+            <Link
+              to="/"
+              className="group/b inline-flex items-center gap-2 text-[0.76rem] text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]"
+            >
+              <MoveLeft
+                size={14}
+                aria-hidden="true"
+                className="transition-transform duration-200 group-hover/b:-translate-x-1"
+              />
+              {es ? 'Volver al inicio' : 'Back to home'}
+            </Link>
+          </div>
+          <div className="rule-draw mt-5 h-px w-full bg-[var(--rule2)]" />
+        </div>
 
-      <div className="mx-auto max-w-[88rem] px-4 pb-20 sm:px-7">
-        <Link
-          to="/"
-          className="group/b inline-flex items-center gap-2 text-[0.76rem] text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]"
-        >
-          <MoveLeft
-            size={14}
-            aria-hidden="true"
-            className="transition-transform duration-200 group-hover/b:-translate-x-1"
-          />
-          {es ? 'Volver al inicio' : 'Back to home'}
-        </Link>
+        <ContactForm lang={lang} />
       </div>
     </>
   )
