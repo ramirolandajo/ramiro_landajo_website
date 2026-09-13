@@ -20,7 +20,11 @@ Git repo; work happens on `develop`.
 
 ## Stack
 
-React 19 · Vite 8 · TypeScript (strict) · Tailwind v4 · oxlint.
+React 19 · Vite 8 · TypeScript (strict) · Tailwind v4 · react-router 7 · oxlint.
+Vercel Web Analytics via `@vercel/analytics/react` in `src/App.tsx` — the
+`/react` entry, not `/next`: the Next one imports `next/navigation`. It only
+reports from a Vercel deployment; locally it logs that the edge script is
+missing, which is expected.
 One font: **JetBrains Mono** (400/500/700/800), loaded from Google Fonts in
 `index.html`. One icon set: **lucide-react**, plus two hand-authored brand
 marks (lucide dropped GitHub/LinkedIn for trademark reasons).
