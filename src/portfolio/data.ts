@@ -408,12 +408,12 @@ export const projects: Project[] = [
    the hiring line already lives in the hero's status and on /contact. */
 export const contactCta = {
   title: {
-    en: 'You made it all the way down here. Say hi.',
-    es: 'Llegaste hasta el final. Escribime.',
+    en: 'You made it all the way down here. Say hi!',
+    es: 'Llegaste hasta el final. Escribime!',
   },
   body: {
     en: "A project, a question, or something on this page you would have built differently — all of it is welcome. I read every message, and I answer.",
-    es: 'Un proyecto, una pregunta, o algo de esta página que vos habrías hecho distinto — todo bienvenido. Leo todos los mensajes, y respondo.',
+    es: 'Un proyecto, una pregunta, o algo de esta página que vos habrías hecho distinto — todo es bienvenido. Leo todos los mensajes, y contesto.',
   },
   action: { en: 'Open the form', es: 'Abrir el formulario' },
 } as const
