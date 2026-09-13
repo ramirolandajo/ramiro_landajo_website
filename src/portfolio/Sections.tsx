@@ -275,7 +275,6 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.68rem]">
             <span className="tnum text-[var(--acc)]">{p.n}</span>
-            <span className="tnum text-[var(--faint)]">{p.year}</span>
             <span className="text-[var(--faint)]">{t(p.team, lang)}</span>
           </div>
 

@@ -297,7 +297,6 @@ export type Project = {
      the project has no proper name of its own. */
   name: string | L
   kind: L
-  year: string
   team: L
   span: string
   summary: L
@@ -318,7 +317,6 @@ export const projects: Project[] = [
       en: 'Event-driven e-commerce platform',
       es: 'Plataforma de e-commerce orientada a eventos',
     },
-    year: '2026',
     team: { en: 'Team of 5 · UADE', es: 'Equipo de 5 · UADE' },
     span: 'md:col-span-2 md:row-span-2',
     summary: {
@@ -350,7 +348,6 @@ export const projects: Project[] = [
       en: 'Municipal claims app',
       es: 'App de gestión barrial',
     },
-    year: '2024',
     team: { en: 'Team of 3 · UADE', es: 'Equipo de 3 · UADE' },
     span: 'md:col-span-1 md:row-span-2',
     summary: {
@@ -382,7 +379,6 @@ export const projects: Project[] = [
       en: 'Mobile game store',
       es: 'Tienda de videojuegos mobile',
     },
-    year: '2024',
     team: { en: 'Solo', es: 'Individual' },
     span: 'md:col-span-1 md:row-span-2',
     summary: {
@@ -411,7 +407,6 @@ export const projects: Project[] = [
       en: 'Software architecture coursework',
       es: 'Trabajo de Arquitectura de Aplicaciones',
     },
-    year: '2026',
     team: { en: 'Team of 8 · UADE', es: 'Equipo de 8 · UADE' },
     span: 'md:col-span-4',
     summary: {
