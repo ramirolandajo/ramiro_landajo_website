@@ -178,6 +178,23 @@ body {
   transform-origin: left;
 }
 
+/* ---------------------------------------------------------------------------
+   PROJECT SCREENSHOTS
+   The shots are the only colour on the page. They sit a step back from the
+   type until the card is hovered or focused, so the section still reads as
+   near-monochrome from across the room. The global reduced-motion block above
+   already flattens the transition; the filter itself is not motion, so it
+   stays.
+   --------------------------------------------------------------------------- */
+.shot > img {
+  filter: saturate(0.7) brightness(0.84);
+  transition: filter 300ms ease;
+}
+.pcard:hover .shot > img,
+.pcard:focus-within .shot > img {
+  filter: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

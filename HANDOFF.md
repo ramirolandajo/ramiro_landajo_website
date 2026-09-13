@@ -1,6 +1,6 @@
 # Portfolio — handoff
 
-State as of **2026-08-26**. Written so a fresh session can pick this up without
+State as of **2026-09-13**. Written so a fresh session can pick this up without
 replaying the design conversation.
 
 ---
@@ -14,7 +14,7 @@ npm run build      # typecheck is separate: npx tsc --noEmit
 npm run lint       # oxlint; scope it with: npx oxlint src
 ```
 
-Not a git repo yet — `git init` when ready.
+Git repo; work happens on `develop`.
 
 ---
 
@@ -42,6 +42,7 @@ src/portfolio/
   Terminal.tsx                 the working shell + its command registry
   BrandIcons.tsx               GitHub / LinkedIn SVG marks
 public/Landajo_Ramiro_CV.pdf   linked from the hero and contact
+public/projects/*.webp         project screenshots, cropped from each repo's README
 ```
 
 ---
@@ -55,7 +56,7 @@ Six sections, numbered `// nav` in the Tamal Sen idiom:
 | 01 | `home` | Full-viewport terminal hero. Prompt types `whoami`, a block cursor appears on the empty line below and blinks alone, then **RAMIRO** / **LANDAJO** is written out one character at a time, offset, `clamp(2.9rem, 11.5vw, 9.5rem)`. The cursor rides the end of it and blinks forever after. |
 | 02 | `expertise` | Four areas in one bordered block, bodies wrapped in `<h3>…</h3>` code tags. Full grouped stack below. |
 | 03 | `experience` | Role cards, **technical first**, then other roles, then education / certs / languages. |
-| 04 | `projects` | Bento: `4 cols × 15rem rows`, one 2×2 anchor + one 2×1 + two 1×1. **Currently four empty marked slots.** |
+| 04 | `projects` | Bento: `4 cols × 15rem rows`. CompuMundoHMR 2×2 with a desktop screenshot, the two mobile apps beside it as 1×2 columns with portrait screenshots, the architecture ecosystem full width underneath. Filled with four real repos on 2026-09-13. |
 | 05 | `shell` | The working terminal as its own section. |
 | 06 | `contact` | Validated form that composes a `mailto:`. No backend. |
 
@@ -77,7 +78,12 @@ robbowen.digital.
 - **Contact = `mailto:` compose.** Chosen over Formspree/Web3Forms so it works
   on deploy with no signup. If this changes, the handler is `submit()` in
   `Contact` (`Sections.tsx`).
-- **Projects stay empty until real.** Explicit instruction — nothing invented.
+- **Projects are the four real repos**, in Ramiro's order of weight:
+  CompuMundoHMR, CABA+ (AppMunicipal), Game Shop (video-game-ecommerce), then
+  the Arquitectura de Aplicaciones ecosystem. Filled 2026-09-13, replacing the
+  four empty slots. Nothing here is invented: descriptions come from each
+  repo's README, and each `mine` line comes from that repo's commit history
+  filtered to Ramiro. **If you add a project, source it the same way.**
 
 ### Motion
 
@@ -122,17 +128,24 @@ Teresa secondary, both CoderHouse certifications, languages, contact details.
 **Placeholder** — anything in `[BRACKETS]` renders visibly so it cannot ship by
 accident:
 
-- `projectSlots` in `data.ts` — four empty slots. Slot 02 is already pointed at
-  the GardenLife Spring Boot tool; slot 03 at UADE coursework.
 - `roles[0].todo` — the GardenLife backend role has three TODO slots (what the
   tool does, scale, a decision argued for).
+
+**Missing, not placeholder** — `projects[3]` (the microservices ecosystem) has
+`mine: null`. The fork at `facuguzzz/TPO_ArquitecturaDeAplicaciones_Grupo8`
+carries a single commit author for the whole tree, so the history cannot
+support a claim about who wrote what. The card describes the system and labels
+it *Team of 8*; it says nothing about Ramiro's slice until Ramiro supplies one.
+`projects[2]` (Game Shop) is `mine: null` for the opposite reason — it is solo,
+and the card says so.
 
 ---
 
 ## TODO — Ramiro
 
-1. **Fill the four project slots.** This is the single highest-value change on
-   the page; a backend recruiter reads it first.
+1. **Say what you did on the architecture project** (`projects[3].mine` in
+   `data.ts`). It is the only card with no `my part` line, because its commit
+   history is squashed under one author — see Content status.
 2. **Fill the three GardenLife TODOs** in `roles[0].todo`.
 3. **Rewrite `story.lede`** (`data.ts`) in your own voice — the facts are yours,
    the phrasing is mine.

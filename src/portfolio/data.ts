@@ -277,57 +277,162 @@ export const expertise: Area[] = [
 ]
 
 /* ---------------------------------------------------------------------------
- * Project slots.
+ * Projects.
  *
- * Deliberately EMPTY. Ramiro's CV names no projects, and inventing them would
- * be the worst possible thing to put in front of a recruiter. Each slot states
- * exactly what belongs in it; the bento is sized so the real cards will drop
- * straight in.
+ * Four real repositories. Every claim below is sourced: the descriptions come
+ * from each repo's README, and the `mine` line comes from that repo's commit
+ * history filtered to Ramiro (author `ramalandajo@gmail.com` /
+ * `ramirolandajo`). Nothing here is inferred from a job title.
+ *
+ * Order is Ramiro's, by weight: CompuMundoHMR, CABA+, Game Shop, then the
+ * architecture ecosystem. The bento spans encode that order — do not reshuffle
+ * them without reshuffling the array.
  * ------------------------------------------------------------------------- */
-export type Slot = { n: string; span: string; hint: L; fields: L }
+export type Shot = { src: string; w: number; h: number; shape: 'wide' | 'phone'; alt: L }
 
-export const projectSlots: Slot[] = [
+export type Project = {
+  n: string
+  id: string
+  /* Plain string where the repo's own name is the name; bilingual only where
+     the project has no proper name of its own. */
+  name: string | L
+  kind: L
+  year: string
+  team: L
+  span: string
+  summary: L
+  /* What Ramiro himself wrote, per commit history. `null` where the history
+     cannot support a claim — see the architecture project. */
+  mine: L | null
+  stack: string[]
+  repo: string
+  shot: Shot | null
+}
+
+export const projects: Project[] = [
   {
     n: '01',
-    span: 'md:col-span-2 md:row-span-2',
-    hint: {
-      en: 'Your strongest project. The one you would happily be interviewed about for an hour.',
-      es: 'Tu proyecto más fuerte. Del que te entrevistarían una hora y disfrutarías.',
+    id: 'compumundo',
+    name: 'CompuMundoHMR',
+    kind: {
+      en: 'Event-driven e-commerce platform',
+      es: 'Plataforma de e-commerce orientada a eventos',
     },
-    fields: {
-      en: 'name · stack · what it does · one architecture decision · repo or demo · a screenshot',
-      es: 'nombre · stack · qué hace · una decisión de arquitectura · repo o demo · una captura',
+    year: '2026',
+    team: { en: 'Team of 5 · UADE', es: 'Equipo de 5 · UADE' },
+    span: 'md:col-span-2 md:row-span-2',
+    summary: {
+      en: 'Five Spring Boot services and four React frontends around a Core event bus. Modules publish to and read from one Kafka topic; a middleware checks the Keycloak token and validates every payload against a JSON Schema before it reaches the Core. Ten separate repositories, merged into one monorepo with each commit history intact.',
+      es: 'Cinco servicios Spring Boot y cuatro frontends React alrededor de un bus de eventos Core. Los módulos publican y leen de un mismo topic de Kafka; un middleware valida el token de Keycloak y cada payload contra un JSON Schema antes de que llegue al Core. Diez repositorios separados, unificados en un monorepo con todo el historial de commits intacto.',
+    },
+    mine: {
+      en: 'The infrastructure and the delivery path. Terraform for dev and prod (VPC, database, CloudFront, Elastic Beanstalk), every GitHub Actions pipeline in the repo, and the Kafka side — SASL auth on the external listener, topic and broker configuration, and the event contract in the middleware.',
+      es: 'La infraestructura y el camino a producción. Terraform para dev y prod (VPC, base de datos, CloudFront, Elastic Beanstalk), todos los pipelines de GitHub Actions del repo, y la parte de Kafka — autenticación SASL en el listener externo, configuración de topics y broker, y el contrato de eventos en el middleware.',
+    },
+    stack: ['Java 17', 'Spring Boot', 'Kafka', 'Keycloak', 'MySQL', 'React', 'Terraform', 'AWS', 'GitHub Actions'],
+    repo: 'https://github.com/ramirolandajo/CompuMundoHMR',
+    shot: {
+      src: '/projects/compumundo-core.webp',
+      w: 1400,
+      h: 728,
+      shape: 'wide',
+      alt: {
+        en: 'The Core event console listing live Kafka events with id, type, payload, origin module and timestamp.',
+        es: 'La consola de eventos del Core mostrando eventos vivos de Kafka con id, tipo, payload, módulo de origen y fecha.',
+      },
     },
   },
   {
     n: '02',
-    span: 'md:col-span-2',
-    hint: {
-      en: 'The GardenLife internal tool — Spring Boot, REST APIs, Postman.',
-      es: 'La herramienta interna de GardenLife — Spring Boot, APIs REST, Postman.',
+    id: 'caba',
+    name: 'CABA+',
+    kind: {
+      en: 'Municipal claims app',
+      es: 'App de gestión barrial',
     },
-    fields: { en: 'what it replaced · endpoints · who uses it', es: 'qué reemplazó · endpoints · quién la usa' },
+    year: '2024',
+    team: { en: 'Team of 3 · UADE', es: 'Equipo de 3 · UADE' },
+    span: 'md:col-span-1 md:row-span-2',
+    summary: {
+      en: 'Residents file infrastructure claims and reports, follow their status, and browse services published by local shops. Spring Boot API behind JWT, MySQL, three kinds of user: resident, inspector, public.',
+      es: 'Los vecinos generan reclamos y denuncias de infraestructura, siguen su estado y consultan servicios publicados por comercios del barrio. API Spring Boot detrás de JWT, MySQL, tres tipos de usuario: vecino, inspector y público.',
+    },
+    mine: {
+      en: 'The claims flow end to end — the controllers, the screens that create and track a claim, JWT validation on the client, offline storage so a claim survives with no connection, and the notification a resident gets when an inspector moves one.',
+      es: 'El flujo de reclamos de punta a punta — los controllers, las pantallas que crean y siguen un reclamo, la validación de JWT en el cliente, el guardado local para que un reclamo sobreviva sin conexión, y la notificación que recibe el vecino cuando un inspector lo mueve.',
+    },
+    stack: ['React Native', 'Expo', 'Redux Toolkit', 'Spring Boot', 'JWT', 'MySQL'],
+    repo: 'https://github.com/sebaBernasconi/AppMunicipal-TPO-Desarrollo-De-Apps',
+    shot: {
+      src: '/projects/appmunicipal-reclamos.webp',
+      w: 640,
+      h: 1437,
+      shape: 'phone',
+      alt: {
+        en: 'The claims screen of the CABA+ app, listing claims by state: pending, closed and active.',
+        es: 'La pantalla de reclamos de la app CABA+, con los reclamos listados por estado: pendiente, cerrado y activo.',
+      },
+    },
   },
   {
     n: '03',
-    span: '',
-    hint: { en: 'University coursework worth showing — OS, compilers, distributed systems.', es: 'Trabajo de facultad que valga mostrar — SO, compiladores, sistemas distribuidos.' },
-    fields: { en: 'course · language · the hard part', es: 'materia · lenguaje · la parte difícil' },
+    id: 'gameshop',
+    name: 'Game Shop',
+    kind: {
+      en: 'Mobile game store',
+      es: 'Tienda de videojuegos mobile',
+    },
+    year: '2024',
+    team: { en: 'Solo', es: 'Individual' },
+    span: 'md:col-span-1 md:row-span-2',
+    summary: {
+      en: 'Browse by genre, cart, checkout, order history. Orders go to Firebase; the session lives in a SQLite database on the device, so a login survives a restart. Profile pictures come from the camera or the gallery.',
+      es: 'Catálogo por género, carrito, checkout e historial de órdenes. Las órdenes van a Firebase; la sesión vive en una base SQLite del dispositivo, así el login sobrevive a un reinicio. La foto de perfil sale de la cámara o de la galería.',
+    },
+    mine: null,
+    stack: ['React Native', 'Expo', 'Redux Toolkit', 'Firebase', 'SQLite'],
+    repo: 'https://github.com/ramirolandajo/video-game-ecommerce',
+    shot: {
+      src: '/projects/gameshop-detail.webp',
+      w: 640,
+      h: 1462,
+      shape: 'phone',
+      alt: {
+        en: 'The Game Shop product screen: cover art, genre, price and a buy button.',
+        es: 'La pantalla de producto de Game Shop: arte de tapa, género, precio y botón de compra.',
+      },
+    },
   },
   {
     n: '04',
-    span: '',
-    hint: { en: 'Anything you built for yourself. Small is fine — finished is what counts.', es: 'Algo que hayas hecho para vos. Chico está bien — terminado es lo que cuenta.' },
-    fields: { en: 'why you built it · stack · link', es: 'por qué lo hiciste · stack · link' },
+    id: 'microservices',
+    name: { en: 'Microservices Ecosystem', es: 'Ecosistema de Microservicios' },
+    kind: {
+      en: 'Software architecture coursework',
+      es: 'Trabajo de Arquitectura de Aplicaciones',
+    },
+    year: '2026',
+    team: { en: 'Team of 8 · UADE', es: 'Equipo de 8 · UADE' },
+    span: 'md:col-span-4',
+    summary: {
+      en: 'A Spring Boot 3.4 / Java 21 multi-module ecosystem, built to run the patterns rather than describe them: a config server, Eureka discovery, a Spring Cloud Gateway acting as OAuth2 resource server, a JWT auth service, and an inventory service refactored from layers to hexagonal ports and adapters. Events reach the notification service over RabbitMQ or Kafka — the broker is a Spring profile, not a code change. Zipkin traces every hop through Micrometer; logs land in Elasticsearch via Logstash and are read in Kibana.',
+      es: 'Un ecosistema multi-módulo en Spring Boot 3.4 / Java 21, hecho para correr los patrones y no para describirlos: config server, discovery con Eureka, un Spring Cloud Gateway que actúa de resource server OAuth2, un servicio de autenticación con JWT, y un servicio de inventario refactorizado de capas a arquitectura hexagonal de puertos y adaptadores. Los eventos llegan al servicio de notificaciones por RabbitMQ o por Kafka — el broker es un perfil de Spring, no un cambio de código. Zipkin traza cada salto vía Micrometer; los logs van a Elasticsearch por Logstash y se leen en Kibana.',
+    },
+    mine: null,
+    stack: ['Java 21', 'Spring Boot 3.4', 'Spring Cloud Gateway', 'Eureka', 'RabbitMQ', 'Kafka', 'Zipkin', 'Elasticsearch', 'Logstash', 'Kibana', 'Docker Compose'],
+    repo: 'https://github.com/facuguzzz/TPO_ArquitecturaDeAplicaciones_Grupo8',
+    shot: null,
   },
 ]
 
 export const projectsIntro = {
   title: { en: 'Projects', es: 'Proyectos' },
   lede: {
-    en: 'Four slots, waiting for real work. Nothing invented goes here — a recruiter can tell, and so can you.',
-    es: 'Cuatro espacios, esperando trabajo real. Acá no va nada inventado — un recruiter se da cuenta, y vos también.',
+    en: 'Four repositories, in the order I would defend them. Where a project was built by a team, the card says what I wrote — taken from the commit history, not from memory.',
+    es: 'Cuatro repositorios, en el orden en que los defendería. Donde el proyecto fue de equipo, la tarjeta dice qué escribí yo — sacado del historial de commits, no de la memoria.',
   },
+  repo: { en: 'repository', es: 'repositorio' },
+  mine: { en: 'my part', es: 'lo mío' },
 } as const
 
 /* ---------------------------------------------------------------------------

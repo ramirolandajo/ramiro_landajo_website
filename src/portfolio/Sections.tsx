@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowUpRight, Check, Copy, GraduationCap, Plus } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, GraduationCap } from 'lucide-react'
 import { CodeFramed, Dot, Section } from './Section'
 import { Terminal } from './Terminal'
 import {
@@ -10,13 +10,14 @@ import {
   languages,
   links,
   ls,
-  projectSlots,
+  projects,
   projectsIntro,
   roles,
   stack,
   story,
   t,
   type Lang,
+  type Project,
   type Role,
 } from './data'
 
@@ -198,7 +199,7 @@ export function Experience({ lang }: { lang: Lang }) {
             key={c.org + ls(c.name, 'en')}
             data-fade
             style={{ ['--i' as string]: i }}
-            className="rounded-xl border border-[var(--wrule)] bg-[var(--card)] p-5"
+            className="rounded-xl border border-[var(--rule)] bg-[var(--card)] p-5"
           >
             <p className="text-[0.6rem] uppercase tracking-[0.16em] text-[var(--faint)]">
               {lang === 'es' ? 'certificación' : 'certification'}
@@ -227,9 +228,109 @@ export function Experience({ lang }: { lang: Lang }) {
 
 /* ============================================================================
  * 04 — Projects
- * Four empty slots, on Ramiro's instruction. Each states what belongs in it,
- * and the bento is sized so the real cards drop straight in.
+ * A bento in Ramiro's order of weight: the platform takes 2x2, the two mobile
+ * apps stand next to it as tall 1x2 columns — their screenshots are portrait,
+ * so the shape of the card is the shape of the thing — and the architecture
+ * ecosystem runs full width underneath as a band of infrastructure.
+ *
+ * Each card's title is the link, stretched over the whole card by the ::after,
+ * so the card is clickable without a single unlabelled div.
  * ========================================================================== */
+function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
+  /* The shotless card is the full-width band at the bottom: its body splits
+     into prose and stack so the measure never runs the width of the page. */
+  const band = p.shot === null
+  return (
+    <article
+      data-fade
+      style={{ ['--i' as string]: i }}
+      className={`pcard group/p relative flex flex-col overflow-hidden rounded-xl border border-[var(--rule)] bg-[var(--card)] transition-colors duration-300 focus-within:border-[var(--acc)] hover:border-[var(--rule2)] ${p.span}`}
+    >
+      {p.shot ? (
+        /* A portrait screenshot in a full-width card would zoom to nothing but
+           its own header, so the phone shots are capped and centred; the wide
+           one takes the whole card. Both settle at 15rem once the bento tiles. */
+        <div
+          className={`shot flex shrink-0 justify-center overflow-hidden border-b border-[var(--rule)] bg-[var(--bg)] md:h-[15rem] ${
+            p.shot.shape === 'phone' ? 'h-72' : 'h-52 sm:h-60'
+          }`}
+        >
+          <img
+            src={p.shot.src}
+            width={p.shot.w}
+            height={p.shot.h}
+            alt={t(p.shot.alt, lang)}
+            loading="lazy"
+            decoding="async"
+            className={`h-full w-full object-cover object-top ${p.shot.shape === 'phone' ? 'max-w-[22rem]' : ''}`}
+          />
+        </div>
+      ) : null}
+
+      <div
+        className={`grid min-w-0 flex-1 gap-x-14 p-6 ${
+          band ? 'lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] lg:items-start' : 'grid-rows-[1fr_auto]'
+        }`}
+      >
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.68rem]">
+            <span className="tnum text-[var(--acc)]">{p.n}</span>
+            <span className="tnum text-[var(--faint)]">{p.year}</span>
+            <span className="text-[var(--faint)]">{t(p.team, lang)}</span>
+          </div>
+
+          <h3 className="mt-2.5 text-[clamp(1.1rem,1.7vw,1.5rem)] font-bold leading-tight tracking-[-0.03em]">
+            <a
+              href={p.repo}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${ls(p.name, lang)} — ${t(projectsIntro.repo, lang)} · GitHub`}
+              className="transition-colors duration-200 after:absolute after:inset-0 after:content-[''] hover:text-[var(--acc)]"
+            >
+              {ls(p.name, lang)}
+            </a>
+          </h3>
+          <p className="mt-1 text-[0.76rem] text-[var(--acc)]">{t(p.kind, lang)}</p>
+
+          <div className="mt-4 max-w-[68ch]">
+            <CodeFramed tag="p">{t(p.summary, lang)}</CodeFramed>
+          </div>
+
+          {p.mine ? (
+            <p className="mt-4 max-w-[68ch] text-[0.76rem] leading-[1.7] text-[var(--dim)]">
+              <span className="text-[var(--rule2)]">// </span>
+              <span className="text-[var(--acc)]">{t(projectsIntro.mine, lang)}: </span>
+              {t(p.mine, lang)}
+            </p>
+          ) : null}
+        </div>
+
+        <div className={band ? 'mt-7 lg:mt-0' : 'pt-7'}>
+          <ul className="flex flex-wrap gap-1.5">
+            {p.stack.map((s) => (
+              <li
+                key={s}
+                className="rounded-md border border-[var(--rule2)] px-2 py-0.5 text-[0.68rem] text-[var(--dim)]"
+              >
+                {s}
+              </li>
+            ))}
+          </ul>
+
+          {/* Decorative: the <a> on the title already carries this destination. */}
+          <p
+            aria-hidden="true"
+            className="mt-6 inline-flex items-center gap-1.5 text-[0.72rem] text-[var(--faint)] transition-colors duration-200 group-hover/p:text-[var(--acc)]"
+          >
+            {t(projectsIntro.repo, lang)}
+            <ArrowUpRight size={13} />
+          </p>
+        </div>
+      </div>
+    </article>
+  )
+}
+
 export function Projects({ lang }: { lang: Lang }) {
   return (
     <Section
@@ -238,34 +339,9 @@ export function Projects({ lang }: { lang: Lang }) {
       title={t(projectsIntro.title, lang)}
       lede={t(projectsIntro.lede, lang)}
     >
-      <div className="grid gap-4 md:auto-rows-[15rem] md:grid-cols-4">
-        {projectSlots.map((s, i) => (
-          <article
-            key={s.n}
-            data-fade
-            style={{ ['--i' as string]: i }}
-            className={`group/p flex flex-col justify-between rounded-xl border border-dashed border-[var(--rule2)] bg-[var(--card)]/40 p-6 transition-colors duration-300 hover:border-[var(--acc)] ${s.span}`}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <span className="tnum text-[0.72rem] text-[var(--acc)]">{s.n}</span>
-              <Plus
-                size={16}
-                aria-hidden="true"
-                className="text-[var(--rule2)] transition-colors duration-300 group-hover/p:text-[var(--acc)]"
-              />
-            </div>
-
-            <div>
-              <p className="text-[clamp(1rem,2vw,1.5rem)] font-bold leading-tight tracking-[-0.02em] text-[var(--rule2)]">
-                [ {lang === 'es' ? 'PROYECTO' : 'PROJECT'} {s.n} ]
-              </p>
-              <p className="mt-3 max-w-[42ch] text-[0.8rem] leading-[1.65] text-[var(--dim)]">{t(s.hint, lang)}</p>
-              <p className="mt-3 text-[0.68rem] leading-[1.7] text-[var(--faint)]">
-                <span className="text-[var(--rule2)]">// </span>
-                {t(s.fields, lang)}
-              </p>
-            </div>
-          </article>
+      <div className="grid gap-4 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-4">
+        {projects.map((p, i) => (
+          <ProjectCard key={p.id} p={p} lang={lang} i={i} />
         ))}
       </div>
     </Section>
