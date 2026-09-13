@@ -333,12 +333,7 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
 
 export function Projects({ lang }: { lang: Lang }) {
   return (
-    <Section
-      id="projects"
-      n="04"
-      title={t(projectsIntro.title, lang)}
-      lede={t(projectsIntro.lede, lang)}
-    >
+    <Section id="projects" n="04" title={t(projectsIntro.title, lang)}>
       <div className="grid gap-4 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-4">
         {projects.map((p, i) => (
           <ProjectCard key={p.id} p={p} lang={lang} i={i} />

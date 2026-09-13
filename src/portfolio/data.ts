@@ -427,10 +427,6 @@ export const projects: Project[] = [
 
 export const projectsIntro = {
   title: { en: 'Projects', es: 'Proyectos' },
-  lede: {
-    en: 'Four repositories, in the order I would defend them. Where a project was built by a team, the card says what I wrote — taken from the commit history, not from memory.',
-    es: 'Cuatro repositorios, en el orden en que los defendería. Donde el proyecto fue de equipo, la tarjeta dice qué escribí yo — sacado del historial de commits, no de la memoria.',
-  },
   repo: { en: 'repository', es: 'repositorio' },
   mine: { en: 'my part', es: 'lo mío' },
 } as const
