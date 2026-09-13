@@ -247,7 +247,7 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
            its own header, so the phone shots are capped and centred; the wide
            one takes the whole card. Both settle at 15rem once the bento tiles. */
         <div
-          className={`shot flex shrink-0 justify-center overflow-hidden border-b border-[var(--rule)] bg-[var(--bg)] md:h-[15rem] ${
+          className={`shot flex shrink-0 justify-center overflow-hidden border-b border-[var(--rule)] bg-[var(--bg)] xl:h-[15rem] ${
             p.shot.shape === 'phone' ? 'h-72' : 'h-52 sm:h-60'
           }`}
         >
@@ -327,7 +327,7 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
 export function Projects({ lang }: { lang: Lang }) {
   return (
     <Section id="projects" n="04" title={t(projectsIntro.title, lang)}>
-      <div className="grid gap-4 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:auto-rows-[minmax(15rem,auto)] xl:grid-cols-4">
         {projects.map((p, i) => (
           <ProjectCard key={p.id} p={p} lang={lang} i={i} />
         ))}

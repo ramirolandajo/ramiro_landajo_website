@@ -285,8 +285,10 @@ export const expertise: Area[] = [
  * `ramirolandajo`). Nothing here is inferred from a job title.
  *
  * Order is Ramiro's, by weight: CompuMundoHMR, CABA+, Game Shop. The spans
- * encode that order and tile one full 4-column row — do not reshuffle them
- * without reshuffling the array.
+ * encode that order and tile one full 4-column row at xl — do not reshuffle
+ * them without reshuffling the array. Below xl the bento drops to two columns
+ * (and then one): four columns on a 1024-wide laptop cut the phone cards'
+ * prose to about twenty characters a line, and at 768 it was fifteen.
  * ------------------------------------------------------------------------- */
 export type Shot = { src: string; w: number; h: number; shape: 'wide' | 'phone'; alt: L }
 
@@ -318,7 +320,7 @@ export const projects: Project[] = [
       es: 'Plataforma de e-commerce orientada a eventos',
     },
     team: { en: 'Team of 5 · UADE', es: 'Equipo de 5 · UADE' },
-    span: 'md:col-span-2 md:row-span-2',
+    span: 'md:col-span-2 xl:row-span-2',
     summary: {
       en: 'Five Spring Boot services and four React frontends around a Core event bus. Modules publish to and read from one Kafka topic; a middleware checks the Keycloak token and validates every payload against a JSON Schema before it reaches the Core. Ten separate repositories, merged into one monorepo with each commit history intact.',
       es: 'Cinco servicios Spring Boot y cuatro frontends React alrededor de un bus de eventos Core. Los módulos publican y leen de un mismo topic de Kafka; un middleware valida el token de Keycloak y cada payload contra un JSON Schema antes de que llegue al Core. Diez repositorios separados, unificados en un monorepo con todo el historial de commits intacto.',
@@ -349,7 +351,7 @@ export const projects: Project[] = [
       es: 'App de gestión barrial',
     },
     team: { en: 'Team of 3 · UADE', es: 'Equipo de 3 · UADE' },
-    span: 'md:col-span-1 md:row-span-2',
+    span: 'xl:row-span-2',
     summary: {
       en: 'Residents file infrastructure claims and reports, follow their status, and browse services published by local shops. Spring Boot API behind JWT, MySQL, three kinds of user: resident, inspector, public.',
       es: 'Los vecinos generan reclamos y denuncias de infraestructura, siguen su estado y consultan servicios publicados por comercios del barrio. API Spring Boot detrás de JWT, MySQL, tres tipos de usuario: vecino, inspector y público.',
@@ -380,7 +382,7 @@ export const projects: Project[] = [
       es: 'Tienda de videojuegos mobile',
     },
     team: { en: 'Solo', es: 'Individual' },
-    span: 'md:col-span-1 md:row-span-2',
+    span: 'xl:row-span-2',
     summary: {
       en: 'Browse by genre, cart, checkout, order history. Orders go to Firebase; the session lives in a SQLite database on the device, so a login survives a restart. Profile pictures come from the camera or the gallery.',
       es: 'Catálogo por género, carrito, checkout e historial de órdenes. Las órdenes van a Firebase; la sesión vive en una base SQLite del dispositivo, así el login sobrevive a un reinicio. La foto de perfil sale de la cámara o de la galería.',

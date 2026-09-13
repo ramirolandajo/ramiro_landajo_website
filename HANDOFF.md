@@ -198,6 +198,19 @@ accident:
 
 ## Gotchas
 
+- **The scroll-spy needs the at-end rule.** "Topmost visible section wins"
+  cannot ever pick the LAST section: the page stops scrolling while the
+  previous one still clips the observer band. `Layout` checks for the end of
+  the document first, and a rAF-throttled scroll listener backs the observer up
+  because arriving at the foot of the page often changes no intersection at
+  all. Found in QA on 2026-09-13, after the contact section shrank to a band.
+- **The projects bento is `xl`, not `md`.** Four columns on a 1024 laptop cut
+  the phone cards' prose to ~20 characters a line, and at 768 to ~15. Two
+  columns below xl, one below md.
+- **`neofetch` measures the terminal.** The monogram sits beside the info rows
+  only when the whole line fits; otherwise it stacks, because a wrapped padded
+  line tears the art apart. `Terminal` keeps a live character-column count for
+  this — don't hardcode a breakpoint.
 - **The fade observer must re-run per route** (`Layout.tsx`, deps
   `[lang, pathname]`). `[data-fade]` starts at `opacity: 0`; a route whose
   elements mount after the observer was built renders permanently invisible.

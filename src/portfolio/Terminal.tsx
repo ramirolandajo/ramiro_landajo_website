@@ -24,7 +24,9 @@ import {
  * a shortcut for people who enjoy shortcuts, never a toll gate.
  * ========================================================================== */
 
-type Line = { id: number; kind: 'in' | 'out' | 'err' | 'dim' | 'acc'; text: string }
+/* `pre` is an accent-coloured prefix on an otherwise normal line — neofetch
+   needs the logo and the info beside it in different colours. */
+type Line = { id: number; kind: 'in' | 'out' | 'err' | 'dim' | 'acc'; text: string; pre?: string }
 
 /* Derived, never hand-written: this list was stale for months because the
    section ids were renamed and the literal array here was not. */
@@ -74,9 +76,12 @@ type Ctx = {
   lang: Lang
   setLang: (l: Lang) => void
   goto: (id: string) => void
+  /* How many characters fit on a line. Real neofetch stacks its logo when the
+     terminal is too narrow to sit beside it; so does this one. */
+  cols: number
 }
 
-type Out = { kind: Line['kind']; text: string }
+type Out = { kind: Line['kind']; text: string; pre?: string }
 
 function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
   const [cmd, ...args] = raw.trim().split(/\s+/)
@@ -104,11 +109,22 @@ function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
     case 'neofetch': {
       const rows = fetchLines.map((f) => `${pad(f.k, 8)} ${t(f.v, lang)}`)
       const art = monogram
-      const height = Math.max(art.length, rows.length)
+      const widest = rows.reduce((w, r) => Math.max(w, r.length), 0)
       const out: Out[] = []
-      for (let i = 0; i < height; i++) {
-        out.push(O(`${pad(art[i] ?? '', 16)}${rows[i] ?? ''}`, i < art.length ? 'acc' : 'out'))
+
+      /* Side by side only if the whole line fits. Wrapping a padded line tears
+         the monogram apart, which is what it used to do on a phone. */
+      if (ctx.cols >= 16 + widest) {
+        const height = Math.max(art.length, rows.length)
+        for (let i = 0; i < height; i++) {
+          out.push({ kind: 'out', text: rows[i] ?? '', pre: pad(art[i] ?? '', 16) })
+        }
+        return { out }
       }
+
+      art.forEach((line) => out.push(O(line.trimEnd(), 'acc')))
+      out.push(O(''))
+      rows.forEach((r) => out.push(O(r)))
       return { out }
     }
 
@@ -236,6 +252,25 @@ export function Terminal({
   const logRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const seq = useRef(0)
+  /* Character columns available, remeasured on resize — the shell is a full
+     sheet on a phone and a panel on a desktop, and `neofetch` needs to know. */
+  const [cols, setCols] = useState(80)
+
+  useEffect(() => {
+    const el = logRef.current
+    if (!el) return
+    const measure = () => {
+      const cs = getComputedStyle(el)
+      const inner = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
+      /* JetBrains Mono advances 0.6em per character. */
+      const ch = (parseFloat(cs.fontSize) || 11.5) * 0.6
+      setCols(Math.max(20, Math.floor(inner / ch)))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   useEffect(() => {
     seq.current = 0
@@ -261,7 +296,7 @@ export function Terminal({
       setHistory((h) => [raw, ...h].slice(0, 40))
       setHIdx(-1)
     }
-    const res = run(raw, { lang, setLang, goto })
+    const res = run(raw, { lang, setLang, goto, cols })
     if (res.clear) {
       setLines([])
       return
@@ -269,7 +304,7 @@ export function Terminal({
     setLines((prev) => [
       ...prev,
       { id: seq.current++, kind: 'in', text: raw },
-      ...res.out.map((o) => ({ id: seq.current++, kind: o.kind, text: o.text })),
+      ...res.out.map((o) => ({ id: seq.current++, kind: o.kind, text: o.text, pre: o.pre })),
     ])
   }
 
@@ -294,6 +329,7 @@ export function Terminal({
         {lines.map((l) => (
           <p key={l.id} className={`out-in whitespace-pre-wrap break-words ${TONE[l.kind]}`}>
             {l.kind === 'in' ? <span className="text-[var(--acc)]">{prompt} </span> : null}
+            {l.pre ? <span className="text-[var(--acc)]">{l.pre}</span> : null}
             {l.text}
           </p>
         ))}

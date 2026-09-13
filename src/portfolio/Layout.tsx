@@ -18,9 +18,10 @@ export default function Layout() {
   const loc = useLocation()
   const navigate = useNavigate()
   const home = loc.pathname === '/'
-  /* Off home there is nothing to observe and one right answer, so derive it
-     rather than pushing it into state from an effect. */
-  const active = home ? spyActive : 'contact'
+  /* Off home there is nothing to observe, so derive the highlight from the
+     route instead of pushing it into state from an effect. An unknown path
+     matches no nav item and correctly highlights nothing. */
+  const active = home ? spyActive : (nav.find((n) => n.to === loc.pathname)?.id ?? '')
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -33,14 +34,29 @@ export default function Layout() {
   useEffect(() => {
     if (!home) return
     const visible = new Set<string>()
+
+    const decide = () => {
+      /* At the very bottom the topmost-visible rule cannot pick the last
+         section: the page stops scrolling while the previous section still
+         clips the observer band, so it wins forever. If we are at the end of
+         the document, the last section is what you are looking at. */
+      const atEnd =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
+      if (atEnd) {
+        setSpyActive(nav[nav.length - 1].id)
+        return
+      }
+      const first = nav.find((n) => visible.has(n.id))
+      if (first) setSpyActive(first.id)
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) visible.add(e.target.id)
           else visible.delete(e.target.id)
         })
-        const first = nav.find((n) => visible.has(n.id))
-        if (first) setSpyActive(first.id)
+        decide()
       },
       { rootMargin: '-20% 0px -65% 0px' },
     )
@@ -48,7 +64,25 @@ export default function Layout() {
       const el = document.getElementById(n.id)
       if (el) io.observe(el)
     })
-    return () => io.disconnect()
+
+    /* The observer only fires when an intersection CHANGES, and arriving at
+       the foot of the page often changes nothing. One cheap rAF-throttled
+       listener covers it. */
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        decide()
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      io.disconnect()
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [home])
 
   /* Fade every section and card in once, as it arrives. This MUST re-run per
