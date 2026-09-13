@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { CodeFramed, Dot, Section } from './Section'
 import {
   certifications,
+  contactCta,
   education,
   expertise,
   languages,
@@ -353,15 +354,9 @@ export function ContactCta({ lang }: { lang: Lang }) {
       >
         <div className="max-w-[46ch]">
           <p className="text-[clamp(1.3rem,3vw,2rem)] font-bold leading-[1.15] tracking-[-0.035em]">
-            {lang === 'es'
-              ? '¿Tenés algo en mente? Escribime.'
-              : 'Got something in mind? Write to me.'}
+            {t(contactCta.title, lang)}
           </p>
-          <p className="mt-3 text-[0.86rem] leading-[1.75] text-[var(--dim)]">
-            {lang === 'es'
-              ? 'Busco puestos de backend o full-stack, en Buenos Aires o remoto. Respondo todos los mensajes.'
-              : 'Open to backend or full-stack roles, in Buenos Aires or remote. I answer every message.'}
-          </p>
+          <p className="mt-3 text-[0.86rem] leading-[1.75] text-[var(--dim)]">{t(contactCta.body, lang)}</p>
         </div>
 
         <div className="flex shrink-0 flex-col items-start gap-4">
@@ -369,7 +364,7 @@ export function ContactCta({ lang }: { lang: Lang }) {
             to="/contact"
             className="inline-flex items-center gap-2.5 rounded-lg bg-[var(--acc)] px-6 py-3.5 text-[0.84rem] font-bold text-[var(--acc-ink)] transition-transform duration-200 hover:-translate-y-0.5"
           >
-            {lang === 'es' ? 'Abrir el formulario' : 'Open the form'}
+            {t(contactCta.action, lang)}
             <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
 

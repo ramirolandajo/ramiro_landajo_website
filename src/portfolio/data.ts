@@ -403,6 +403,21 @@ export const projects: Project[] = [
   },
 ]
 
+/* The band that closes the home page. It talks to someone who has read the
+   whole thing, so it thanks them for the scroll rather than pitching at them —
+   the hiring line already lives in the hero's status and on /contact. */
+export const contactCta = {
+  title: {
+    en: 'You made it all the way down here. Say hi.',
+    es: 'Llegaste hasta el final. Escribime.',
+  },
+  body: {
+    en: "A project, a question, or something on this page you would have built differently — all of it is welcome. I read every message, and I answer.",
+    es: 'Un proyecto, una pregunta, o algo de esta página que vos habrías hecho distinto — todo bienvenido. Leo todos los mensajes, y respondo.',
+  },
+  action: { en: 'Open the form', es: 'Abrir el formulario' },
+} as const
+
 export const projectsIntro = {
   title: { en: 'Projects', es: 'Proyectos' },
   repo: { en: 'repository', es: 'repositorio' },
