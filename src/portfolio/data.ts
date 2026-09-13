@@ -361,13 +361,13 @@ export const projects: Project[] = [
     stack: ['React Native', 'Expo', 'Redux Toolkit', 'Spring Boot', 'JWT', 'MySQL'],
     repo: 'https://github.com/sebaBernasconi/AppMunicipal-TPO-Desarrollo-De-Apps',
     shot: {
-      src: '/projects/appmunicipal-reclamos.webp',
+      src: '/projects/appmunicipal-login.webp',
       w: 640,
-      h: 1437,
+      h: 1440,
       shape: 'phone',
       alt: {
-        en: 'The claims screen of the CABA+ app, listing claims by state: pending, closed and active.',
-        es: 'La pantalla de reclamos de la app CABA+, con los reclamos listados por estado: pendiente, cerrado y activo.',
+        en: 'The CABA+ login screen: the app mark, a DNI and password form, a sign-up link and a guest mode.',
+        es: 'La pantalla de login de CABA+: el isotipo de la app, el formulario de DNI y contraseña, el enlace para solicitar cuenta y el modo invitado.',
       },
     },
   },
