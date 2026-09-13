@@ -56,7 +56,7 @@ Six sections, numbered `// nav` in the Tamal Sen idiom:
 | 01 | `home` | Full-viewport terminal hero. Prompt types `whoami`, a block cursor appears on the empty line below and blinks alone, then **RAMIRO** / **LANDAJO** is written out one character at a time, offset, `clamp(2.9rem, 11.5vw, 9.5rem)`. The cursor rides the end of it and blinks forever after. |
 | 02 | `expertise` | Four areas in one bordered block, bodies wrapped in `<h3>…</h3>` code tags. Full grouped stack below. |
 | 03 | `experience` | Role cards, **technical first**, then other roles, then education / certs / languages. |
-| 04 | `projects` | Bento: `4 cols × 15rem rows`. CompuMundoHMR 2×2 with a desktop screenshot, the two mobile apps beside it as 1×2 columns with portrait screenshots, the architecture ecosystem full width underneath. Filled with four real repos on 2026-09-13. |
+| 04 | `projects` | Bento: `4 cols × 15rem rows`, one full row. CompuMundoHMR 2×2 with the storefront screenshot, the two mobile apps beside it as 1×2 columns with portrait screenshots. Filled with real repos on 2026-09-13. No lede under the heading — Ramiro's call. |
 | 05 | `shell` | The working terminal as its own section. |
 | 06 | `contact` | Validated form that composes a `mailto:`. No backend. |
 
@@ -78,12 +78,16 @@ robbowen.digital.
 - **Contact = `mailto:` compose.** Chosen over Formspree/Web3Forms so it works
   on deploy with no signup. If this changes, the handler is `submit()` in
   `Contact` (`Sections.tsx`).
-- **Projects are the four real repos**, in Ramiro's order of weight:
-  CompuMundoHMR, CABA+ (AppMunicipal), Game Shop (video-game-ecommerce), then
-  the Arquitectura de Aplicaciones ecosystem. Filled 2026-09-13, replacing the
-  four empty slots. Nothing here is invented: descriptions come from each
-  repo's README, and each `mine` line comes from that repo's commit history
-  filtered to Ramiro. **If you add a project, source it the same way.**
+- **Projects are three real repos**, in Ramiro's order of weight:
+  CompuMundoHMR, CABA+ (AppMunicipal), Game Shop (video-game-ecommerce).
+  Filled 2026-09-13, replacing the four empty slots. A fourth card — the
+  Arquitectura de Aplicaciones microservices ecosystem — was built and then
+  **removed on Ramiro's instruction**; don't re-add it. Nothing here is
+  invented: descriptions come from each repo's README, and each `mine` line
+  comes from that repo's commit history filtered to Ramiro. **If you add a
+  project, source it the same way.**
+- **No year on the cards, no lede under the heading.** Both removed on
+  2026-09-13 at Ramiro's request; `year` is gone from the `Project` type.
 
 ### Motion
 
@@ -131,28 +135,20 @@ accident:
 - `roles[0].todo` — the GardenLife backend role has three TODO slots (what the
   tool does, scale, a decision argued for).
 
-**Missing, not placeholder** — `projects[3]` (the microservices ecosystem) has
-`mine: null`. The fork at `facuguzzz/TPO_ArquitecturaDeAplicaciones_Grupo8`
-carries a single commit author for the whole tree, so the history cannot
-support a claim about who wrote what. The card describes the system and labels
-it *Team of 8*; it says nothing about Ramiro's slice until Ramiro supplies one.
-`projects[2]` (Game Shop) is `mine: null` for the opposite reason — it is solo,
-and the card says so.
+`projects[2]` (Game Shop) is `mine: null` because it is solo — the card says
+*Solo* and needs no attribution line. The other two carry a `mine` line.
 
 ---
 
 ## TODO — Ramiro
 
-1. **Say what you did on the architecture project** (`projects[3].mine` in
-   `data.ts`). It is the only card with no `my part` line, because its commit
-   history is squashed under one author — see Content status.
-2. **Fill the three GardenLife TODOs** in `roles[0].todo`.
-3. **Rewrite `story.lede`** (`data.ts`) in your own voice — the facts are yours,
+1. **Fill the three GardenLife TODOs** in `roles[0].todo`.
+2. **Rewrite `story.lede`** (`data.ts`) in your own voice — the facts are yours,
    the phrasing is mine.
-4. **Decide about a photo.** There is currently no portrait anywhere on the
+3. **Decide about a photo.** There is currently no portrait anywhere on the
    page. Every reference site has a face. If you want one, `src/assets/` was
    deleted — recreate it.
-5. Confirm `identity.availability` still says what you want it to.
+4. Confirm `identity.availability` still says what you want it to.
 
 ## TODO — next session
 

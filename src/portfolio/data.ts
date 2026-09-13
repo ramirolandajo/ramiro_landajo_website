@@ -284,9 +284,9 @@ export const expertise: Area[] = [
  * history filtered to Ramiro (author `ramalandajo@gmail.com` /
  * `ramirolandajo`). Nothing here is inferred from a job title.
  *
- * Order is Ramiro's, by weight: CompuMundoHMR, CABA+, Game Shop, then the
- * architecture ecosystem. The bento spans encode that order — do not reshuffle
- * them without reshuffling the array.
+ * Order is Ramiro's, by weight: CompuMundoHMR, CABA+, Game Shop. The spans
+ * encode that order and tile one full 4-column row — do not reshuffle them
+ * without reshuffling the array.
  * ------------------------------------------------------------------------- */
 export type Shot = { src: string; w: number; h: number; shape: 'wide' | 'phone'; alt: L }
 
@@ -398,25 +398,6 @@ export const projects: Project[] = [
         es: 'La pantalla de producto de Game Shop: arte de tapa, género, precio y botón de compra.',
       },
     },
-  },
-  {
-    n: '04',
-    id: 'microservices',
-    name: { en: 'Microservices Ecosystem', es: 'Ecosistema de Microservicios' },
-    kind: {
-      en: 'Software architecture coursework',
-      es: 'Trabajo de Arquitectura de Aplicaciones',
-    },
-    team: { en: 'Team of 8 · UADE', es: 'Equipo de 8 · UADE' },
-    span: 'md:col-span-4',
-    summary: {
-      en: 'A Spring Boot 3.4 / Java 21 multi-module ecosystem, built to run the patterns rather than describe them: a config server, Eureka discovery, a Spring Cloud Gateway acting as OAuth2 resource server, a JWT auth service, and an inventory service refactored from layers to hexagonal ports and adapters. Events reach the notification service over RabbitMQ or Kafka — the broker is a Spring profile, not a code change. Zipkin traces every hop through Micrometer; logs land in Elasticsearch via Logstash and are read in Kibana.',
-      es: 'Un ecosistema multi-módulo en Spring Boot 3.4 / Java 21, hecho para correr los patrones y no para describirlos: config server, discovery con Eureka, un Spring Cloud Gateway que actúa de resource server OAuth2, un servicio de autenticación con JWT, y un servicio de inventario refactorizado de capas a arquitectura hexagonal de puertos y adaptadores. Los eventos llegan al servicio de notificaciones por RabbitMQ o por Kafka — el broker es un perfil de Spring, no un cambio de código. Zipkin traza cada salto vía Micrometer; los logs van a Elasticsearch por Logstash y se leen en Kibana.',
-    },
-    mine: null,
-    stack: ['Java 21', 'Spring Boot 3.4', 'Spring Cloud Gateway', 'Eureka', 'RabbitMQ', 'Kafka', 'Zipkin', 'Elasticsearch', 'Logstash', 'Kibana', 'Docker Compose'],
-    repo: 'https://github.com/facuguzzz/TPO_ArquitecturaDeAplicaciones_Grupo8',
-    shot: null,
   },
 ]
 

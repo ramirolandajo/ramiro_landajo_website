@@ -228,18 +228,15 @@ export function Experience({ lang }: { lang: Lang }) {
 
 /* ============================================================================
  * 04 — Projects
- * A bento in Ramiro's order of weight: the platform takes 2x2, the two mobile
- * apps stand next to it as tall 1x2 columns — their screenshots are portrait,
- * so the shape of the card is the shape of the thing — and the architecture
- * ecosystem runs full width underneath as a band of infrastructure.
+ * A bento in Ramiro's order of weight: the platform takes 2x2 and the two
+ * mobile apps stand next to it as tall 1x2 columns — their screenshots are
+ * portrait, so the shape of the card is the shape of the thing. The three
+ * tile one full four-column row.
  *
  * Each card's title is the link, stretched over the whole card by the ::after,
  * so the card is clickable without a single unlabelled div.
  * ========================================================================== */
 function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
-  /* The shotless card is the full-width band at the bottom: its body splits
-     into prose and stack so the measure never runs the width of the page. */
-  const band = p.shot === null
   return (
     <article
       data-fade
@@ -267,11 +264,9 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
         </div>
       ) : null}
 
-      <div
-        className={`grid min-w-0 flex-1 gap-x-14 p-6 ${
-          band ? 'lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] lg:items-start' : 'grid-rows-[1fr_auto]'
-        }`}
-      >
+      {/* Rows rather than flex: the stack and the repo line stay pinned to the
+          bottom of the tile however short the prose above them runs. */}
+      <div className="grid min-w-0 flex-1 grid-rows-[1fr_auto] p-6">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.68rem]">
             <span className="tnum text-[var(--acc)]">{p.n}</span>
@@ -304,7 +299,7 @@ function ProjectCard({ p, lang, i }: { p: Project; lang: Lang; i: number }) {
           ) : null}
         </div>
 
-        <div className={band ? 'mt-7 lg:mt-0' : 'pt-7'}>
+        <div className="pt-7">
           <ul className="flex flex-wrap gap-1.5">
             {p.stack.map((s) => (
               <li
