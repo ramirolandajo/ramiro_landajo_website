@@ -330,13 +330,13 @@ export const projects: Project[] = [
     stack: ['Java 17', 'Spring Boot', 'Kafka', 'Keycloak', 'MySQL', 'React', 'Terraform', 'AWS', 'GitHub Actions'],
     repo: 'https://github.com/ramirolandajo/CompuMundoHMR',
     shot: {
-      src: '/projects/compumundo-core.webp',
+      src: '/projects/compumundo-storefront.webp',
       w: 1400,
-      h: 728,
+      h: 564,
       shape: 'wide',
       alt: {
-        en: 'The Core event console listing live Kafka events with id, type, payload, origin module and timestamp.',
-        es: 'La consola de eventos del Core mostrando eventos vivos de Kafka con id, tipo, payload, módulo de origen y fecha.',
+        en: 'The CompuMundoHMR storefront home page: the featured-product carousel over the shop navigation.',
+        es: 'La home del storefront de CompuMundoHMR: el carrusel de productos destacados sobre la navegación de la tienda.',
       },
     },
   },
