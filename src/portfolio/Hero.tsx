@@ -1,4 +1,5 @@
 import { ArrowDown, FileDown, Mail } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { GithubMark, LinkedinMark } from './BrandIcons'
 import { useHeadlineBoot, useTypewriter } from '../lib/typewriter'
 import { identity, t, type Lang } from './data'
@@ -131,6 +132,15 @@ export function Hero({ lang }: { lang: Lang }) {
                 </a>
               ))}
             </div>
+
+            {/* Where the shell went. The nav button is the affordance that
+                always works; this is the one that makes people try it. */}
+            <p className="mt-6 text-[0.72rem] text-[var(--faint)]">
+              <span className="text-[var(--rule2)]">// </span>
+              {lang === 'es'
+                ? 'apretá ~ en cualquier parte para abrir una consola'
+                : 'press ~ anywhere for a shell'}
+            </p>
           </div>
 
           <dl className="grid grid-cols-2 gap-x-10 gap-y-5 self-end text-[0.72rem] sm:grid-cols-3 lg:grid-cols-1">
@@ -148,14 +158,14 @@ export function Hero({ lang }: { lang: Lang }) {
         </div>
       </div>
 
-      <a
-        href="#expertise"
+      <Link
+        to={{ pathname: '/', hash: '#expertise' }}
         style={scroll.style}
         className={`${scroll.className} group/s absolute inset-x-0 bottom-7 mx-auto flex w-fit items-center gap-2 text-[0.7rem] text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]`}
       >
         <ArrowDown size={13} aria-hidden="true" className="transition-transform duration-300 group-hover/s:translate-y-1" />
         {lang === 'es' ? 'seguí bajando' : 'scroll'}
-      </a>
+      </Link>
     </section>
   )
 }

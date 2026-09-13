@@ -277,57 +277,151 @@ export const expertise: Area[] = [
 ]
 
 /* ---------------------------------------------------------------------------
- * Project slots.
+ * Projects.
  *
- * Deliberately EMPTY. Ramiro's CV names no projects, and inventing them would
- * be the worst possible thing to put in front of a recruiter. Each slot states
- * exactly what belongs in it; the bento is sized so the real cards will drop
- * straight in.
+ * Four real repositories. Every claim below is sourced: the descriptions come
+ * from each repo's README, and the `mine` line comes from that repo's commit
+ * history filtered to Ramiro (author `ramalandajo@gmail.com` /
+ * `ramirolandajo`). Nothing here is inferred from a job title.
+ *
+ * Order is Ramiro's, by weight: CompuMundoHMR, CABA+, Game Shop. The spans
+ * encode that order and tile one full 4-column row at xl — do not reshuffle
+ * them without reshuffling the array. Below xl the bento drops to two columns
+ * (and then one): four columns on a 1024-wide laptop cut the phone cards'
+ * prose to about twenty characters a line, and at 768 it was fifteen.
  * ------------------------------------------------------------------------- */
-export type Slot = { n: string; span: string; hint: L; fields: L }
+export type Shot = { src: string; w: number; h: number; shape: 'wide' | 'phone'; alt: L }
 
-export const projectSlots: Slot[] = [
+export type Project = {
+  n: string
+  id: string
+  /* Plain string where the repo's own name is the name; bilingual only where
+     the project has no proper name of its own. */
+  name: string | L
+  kind: L
+  team: L
+  span: string
+  summary: L
+  /* What Ramiro himself wrote, per commit history. `null` where the history
+     cannot support a claim — see the architecture project. */
+  mine: L | null
+  stack: string[]
+  repo: string
+  shot: Shot | null
+}
+
+export const projects: Project[] = [
   {
     n: '01',
-    span: 'md:col-span-2 md:row-span-2',
-    hint: {
-      en: 'Your strongest project. The one you would happily be interviewed about for an hour.',
-      es: 'Tu proyecto más fuerte. Del que te entrevistarían una hora y disfrutarías.',
+    id: 'compumundo',
+    name: 'CompuMundoHMR',
+    kind: {
+      en: 'Event-driven e-commerce platform',
+      es: 'Plataforma de e-commerce orientada a eventos',
     },
-    fields: {
-      en: 'name · stack · what it does · one architecture decision · repo or demo · a screenshot',
-      es: 'nombre · stack · qué hace · una decisión de arquitectura · repo o demo · una captura',
+    team: { en: 'Team of 5 · UADE', es: 'Equipo de 5 · UADE' },
+    span: 'md:col-span-2 xl:row-span-2',
+    summary: {
+      en: 'Five Spring Boot services and four React frontends around a Core event bus. Modules publish to and read from one Kafka topic; a middleware checks the Keycloak token and validates every payload against a JSON Schema before it reaches the Core. Ten separate repositories, merged into one monorepo with each commit history intact.',
+      es: 'Cinco servicios Spring Boot y cuatro frontends React alrededor de un bus de eventos Core. Los módulos publican y leen de un mismo topic de Kafka; un middleware valida el token de Keycloak y cada payload contra un JSON Schema antes de que llegue al Core. Diez repositorios separados, unificados en un monorepo con todo el historial de commits intacto.',
+    },
+    mine: {
+      en: 'The infrastructure and the delivery path. Terraform for dev and prod (VPC, database, CloudFront, Elastic Beanstalk), every GitHub Actions pipeline in the repo, and the Kafka side — SASL auth on the external listener, topic and broker configuration, and the event contract in the middleware.',
+      es: 'La infraestructura y el camino a producción. Terraform para dev y prod (VPC, base de datos, CloudFront, Elastic Beanstalk), todos los pipelines de GitHub Actions del repo, y la parte de Kafka — autenticación SASL en el listener externo, configuración de topics y broker, y el contrato de eventos en el middleware.',
+    },
+    stack: ['Java 17', 'Spring Boot', 'Kafka', 'Keycloak', 'MySQL', 'React', 'Terraform', 'AWS', 'GitHub Actions'],
+    repo: 'https://github.com/ramirolandajo/CompuMundoHMR',
+    shot: {
+      src: '/projects/compumundo-storefront.webp',
+      w: 1400,
+      h: 564,
+      shape: 'wide',
+      alt: {
+        en: 'The CompuMundoHMR storefront home page: the featured-product carousel over the shop navigation.',
+        es: 'La home del storefront de CompuMundoHMR: el carrusel de productos destacados sobre la navegación de la tienda.',
+      },
     },
   },
   {
     n: '02',
-    span: 'md:col-span-2',
-    hint: {
-      en: 'The GardenLife internal tool — Spring Boot, REST APIs, Postman.',
-      es: 'La herramienta interna de GardenLife — Spring Boot, APIs REST, Postman.',
+    id: 'caba',
+    name: 'CABA+',
+    kind: {
+      en: 'Municipal claims app',
+      es: 'App de gestión barrial',
     },
-    fields: { en: 'what it replaced · endpoints · who uses it', es: 'qué reemplazó · endpoints · quién la usa' },
+    team: { en: 'Team of 3 · UADE', es: 'Equipo de 3 · UADE' },
+    span: 'xl:row-span-2',
+    summary: {
+      en: 'Residents file infrastructure claims and reports, follow their status, and browse services published by local shops. Spring Boot API behind JWT, MySQL, three kinds of user: resident, inspector, public.',
+      es: 'Los vecinos generan reclamos y denuncias de infraestructura, siguen su estado y consultan servicios publicados por comercios del barrio. API Spring Boot detrás de JWT, MySQL, tres tipos de usuario: vecino, inspector y público.',
+    },
+    mine: {
+      en: 'The claims flow end to end — the controllers, the screens that create and track a claim, JWT validation on the client, offline storage so a claim survives with no connection, and the notification a resident gets when an inspector moves one.',
+      es: 'El flujo de reclamos de punta a punta — los controllers, las pantallas que crean y siguen un reclamo, la validación de JWT en el cliente, el guardado local para que un reclamo sobreviva sin conexión, y la notificación que recibe el vecino cuando un inspector lo mueve.',
+    },
+    stack: ['React Native', 'Expo', 'Redux Toolkit', 'Spring Boot', 'JWT', 'MySQL'],
+    repo: 'https://github.com/sebaBernasconi/AppMunicipal-TPO-Desarrollo-De-Apps',
+    shot: {
+      src: '/projects/appmunicipal-login.webp',
+      w: 640,
+      h: 1440,
+      shape: 'phone',
+      alt: {
+        en: 'The CABA+ login screen: the app mark, a DNI and password form, a sign-up link and a guest mode.',
+        es: 'La pantalla de login de CABA+: el isotipo de la app, el formulario de DNI y contraseña, el enlace para solicitar cuenta y el modo invitado.',
+      },
+    },
   },
   {
     n: '03',
-    span: '',
-    hint: { en: 'University coursework worth showing — OS, compilers, distributed systems.', es: 'Trabajo de facultad que valga mostrar — SO, compiladores, sistemas distribuidos.' },
-    fields: { en: 'course · language · the hard part', es: 'materia · lenguaje · la parte difícil' },
-  },
-  {
-    n: '04',
-    span: '',
-    hint: { en: 'Anything you built for yourself. Small is fine — finished is what counts.', es: 'Algo que hayas hecho para vos. Chico está bien — terminado es lo que cuenta.' },
-    fields: { en: 'why you built it · stack · link', es: 'por qué lo hiciste · stack · link' },
+    id: 'gameshop',
+    name: 'Game Shop',
+    kind: {
+      en: 'Mobile game store',
+      es: 'Tienda de videojuegos mobile',
+    },
+    team: { en: 'Solo', es: 'Individual' },
+    span: 'xl:row-span-2',
+    summary: {
+      en: 'Browse by genre, cart, checkout, order history. Orders go to Firebase; the session lives in a SQLite database on the device, so a login survives a restart. Profile pictures come from the camera or the gallery.',
+      es: 'Catálogo por género, carrito, checkout e historial de órdenes. Las órdenes van a Firebase; la sesión vive en una base SQLite del dispositivo, así el login sobrevive a un reinicio. La foto de perfil sale de la cámara o de la galería.',
+    },
+    mine: null,
+    stack: ['React Native', 'Expo', 'Redux Toolkit', 'Firebase', 'SQLite'],
+    repo: 'https://github.com/ramirolandajo/video-game-ecommerce',
+    shot: {
+      src: '/projects/gameshop-detail.webp',
+      w: 640,
+      h: 1462,
+      shape: 'phone',
+      alt: {
+        en: 'The Game Shop product screen: cover art, genre, price and a buy button.',
+        es: 'La pantalla de producto de Game Shop: arte de tapa, género, precio y botón de compra.',
+      },
+    },
   },
 ]
 
+/* The band that closes the home page. It talks to someone who has read the
+   whole thing, so it thanks them for the scroll rather than pitching at them —
+   the hiring line already lives in the hero's status and on /contact. */
+export const contactCta = {
+  title: {
+    en: 'You made it all the way down here. Say hi!',
+    es: 'Llegaste hasta el final. Escribime!',
+  },
+  body: {
+    en: "A project, a question, or something on this page you would have built differently — all of it is welcome. I read every message, and I answer.",
+    es: 'Un proyecto, una pregunta, o algo de esta página que vos habrías hecho distinto — todo es bienvenido. Leo todos los mensajes, y contesto.',
+  },
+  action: { en: 'Open the form', es: 'Abrir el formulario' },
+} as const
+
 export const projectsIntro = {
   title: { en: 'Projects', es: 'Proyectos' },
-  lede: {
-    en: 'Four slots, waiting for real work. Nothing invented goes here — a recruiter can tell, and so can you.',
-    es: 'Cuatro espacios, esperando trabajo real. Acá no va nada inventado — un recruiter se da cuenta, y vos también.',
-  },
+  repo: { en: 'repository', es: 'repositorio' },
+  mine: { en: 'my part', es: 'lo mío' },
 } as const
 
 /* ---------------------------------------------------------------------------
@@ -355,11 +449,14 @@ export const form = {
   errMessage: { en: 'Add a message so I know what this is about.', es: 'Escribí un mensaje así sé de qué se trata.' },
 } as const
 
-export const nav = [
+/* `to` marks an item that is its own route rather than a section of the home
+   page. Everything without it is scrolled to; contact is navigated to. */
+export type NavItem = { id: string; n: string; en: string; es: string; to?: string }
+
+export const nav: NavItem[] = [
   { id: 'home', n: '01', en: 'home', es: 'inicio' },
   { id: 'expertise', n: '02', en: 'expertise', es: 'skills' },
   { id: 'experience', n: '03', en: 'experience', es: 'experiencia' },
   { id: 'projects', n: '04', en: 'projects', es: 'proyectos' },
-  { id: 'shell', n: '05', en: 'shell', es: 'consola' },
-  { id: 'contact', n: '06', en: 'contact', es: 'contacto' },
+  { id: 'contact', n: '05', en: 'contact', es: 'contacto', to: '/contact' },
 ]

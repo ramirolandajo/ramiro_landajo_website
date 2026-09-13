@@ -14,15 +14,24 @@ import { useEffect, useState } from 'react'
 const reduced = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/* The boot is a first impression, not a transition. Home unmounts when you go
+   to /contact, so without this the whole ~4s sequence replays every time you
+   come back, which reads as a bug. Module-level, so a real reload still gets
+   the show. Each hook snapshots it AT MOUNT — reading it live would break
+   StrictMode's double-invoked effects in dev, where the second run would find
+   it already true and leave the hero blank. */
+let booted = false
+
 export function useTypewriter(text: string, speed = 58, startDelay = 260) {
-  const [state, setState] = useState(() => ({ text, n: reduced() ? text.length : 0 }))
+  const [skip] = useState(() => booted || reduced())
+  const [state, setState] = useState(() => ({ text, n: skip ? text.length : 0 }))
 
   /* Derive on change during render, so a new string is correct immediately and
      the effect below is left to do only what it is for: driving the timer. */
-  if (state.text !== text) setState({ text, n: reduced() ? text.length : 0 })
+  if (state.text !== text) setState({ text, n: skip ? text.length : 0 })
 
   useEffect(() => {
-    if (reduced()) return
+    if (skip) return
     let i = 0
     let tid = 0
     const step = () => {
@@ -32,7 +41,7 @@ export function useTypewriter(text: string, speed = 58, startDelay = 260) {
     }
     tid = window.setTimeout(step, startDelay)
     return () => window.clearTimeout(tid)
-  }, [text, speed, startDelay])
+  }, [text, speed, startDelay, skip])
 
   const n = state.text === text ? state.n : 0
   return { out: text.slice(0, n), done: n >= text.length }
@@ -62,15 +71,19 @@ export function useHeadlineBoot(lines: readonly string[], start: boolean, speed 
      string, so switching language must not replay the boot. */
   const key = lines.join('\n')
 
+  const [skip] = useState(() => booted || reduced())
+
   const [state, setState] = useState<BootState>(() =>
-    reduced()
+    skip
       ? { n: lines.map((l) => l.length), caret: lines.length - 1, typing: false, done: true }
       : { n: lines.map(() => 0), caret: -1, typing: false, done: false },
   )
 
   useEffect(() => {
-    /* Under reduced motion the initial state is already the finished one. */
-    if (!start || reduced()) return
+    /* Under reduced motion, and on a return visit, the initial state is
+       already the finished one. */
+    if (!start || skip) return
+    booted = true
     const all = key.split('\n')
 
     const timers: number[] = []
@@ -98,7 +111,7 @@ export function useHeadlineBoot(lines: readonly string[], start: boolean, speed 
     at(t, () => setState((s) => ({ ...s, typing: false, done: true })))
 
     return () => timers.forEach((id) => window.clearTimeout(id))
-  }, [key, speed, start])
+  }, [key, speed, start, skip])
 
   return {
     /* What has been written so far, line by line. */
