@@ -31,6 +31,9 @@ html {
   color-scheme: dark;
   background: var(--bg);
   scroll-behavior: smooth;
+  /* The shell dialog locks body scroll while it is open. Reserving the gutter
+     stops the fixed header from jumping sideways when the bar disappears. */
+  scrollbar-gutter: stable;
 }
 
 body {

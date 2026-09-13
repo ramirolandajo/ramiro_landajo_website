@@ -1,6 +1,6 @@
 # Portfolio — handoff
 
-State as of **2026-09-13**. Written so a fresh session can pick this up without
+State as of **2026-09-13** (second pass: routing + shell overlay). Written so a fresh session can pick this up without
 replaying the design conversation.
 
 ---
@@ -29,16 +29,21 @@ marks (lucide dropped GitHub/LinkedIn for trademark reasons).
 
 ```
 index.html                     fonts, meta, <noscript> fade-in fallback
+vercel.json                    SPA rewrite so /contact survives a hard refresh
 src/index.css                  ALL design tokens + every keyframe. Start here.
-src/App.tsx                    renders <Portfolio/>
+src/App.tsx                    BrowserRouter + the three routes
 src/lib/typewriter.ts          types the `whoami` command + runs the hero boot sequence
 src/portfolio/
   data.ts                      ALL content. Bilingual {en,es}. Single source of truth.
-  Portfolio.tsx                composition, scroll-spy, fade observer, lang state
-  Nav.tsx                      fixed nav, numbered `// name` items
+  Layout.tsx                   lang, nav highlight, scroll manager, hotkey, shell, footer
+  HomePage.tsx                 route /        — the four sections + the contact CTA
+  ContactPage.tsx              route /contact — the form
+  NotFound.tsx                 route *
+  ShellDialog.tsx              the shell, as a <dialog> over every route
+  Nav.tsx                      fixed nav, numbered `// name` items, shell button
   Hero.tsx                     section 01
   Section.tsx                  <Section> frame + <CodeFramed> + <Dot> primitives
-  Sections.tsx                 sections 02–06 (Expertise, Experience, Projects, ShellSection, Contact)
+  Sections.tsx                 sections 02–05 (Expertise, Experience, Projects, ContactCta)
   Terminal.tsx                 the working shell + its command registry
   BrandIcons.tsx               GitHub / LinkedIn SVG marks
 public/Landajo_Ramiro_CV.pdf   linked from the hero and contact
@@ -57,8 +62,14 @@ Six sections, numbered `// nav` in the Tamal Sen idiom:
 | 02 | `expertise` | Four areas in one bordered block, bodies wrapped in `<h3>…</h3>` code tags. Full grouped stack below. |
 | 03 | `experience` | Role cards, **technical first**, then other roles, then education / certs / languages. |
 | 04 | `projects` | Bento: `4 cols × 15rem rows`, one full row. CompuMundoHMR 2×2 with the storefront screenshot, the two mobile apps beside it as 1×2 columns with portrait screenshots. Filled with real repos on 2026-09-13. No lede under the heading — Ramiro's call. |
-| 05 | `shell` | The working terminal as its own section. |
-| 06 | `contact` | Validated form that composes a `mailto:`. No backend. |
+| 05 | `contact` | A call-to-action band, not the form. Links to `/contact`, with the address and LinkedIn inline so the fast path stays one click. |
+
+Plus two things that are no longer sections:
+
+| | What it is |
+|---|---|
+| `/contact` | The validated `mailto:` form, on its own route. |
+| the shell | A `<dialog>` over every route — nav button, `~`, or Ctrl/⌘+K. |
 
 **References this was built from** — if a future change contradicts these, it is
 probably wrong: Nikita Khvatov (giant offset mono hero), tamalsen.dev (numbered
@@ -78,6 +89,14 @@ robbowen.digital.
 - **Contact = `mailto:` compose.** Chosen over Formspree/Web3Forms so it works
   on deploy with no signup. If this changes, the handler is `submit()` in
   `Contact` (`Sections.tsx`).
+- **The shell is an overlay, not a section.** Moved 2026-09-13: it cost a
+  `26rem` card most visitors never used, and as a dialog it is louder, not
+  quieter — it follows you to `/contact`. Opened by the nav button (the only
+  affordance that always works), `~`, or Ctrl/⌘+K. **Do not put it back in the
+  page flow.**
+- **Contact is a route.** `/contact` holds the form; section 05 on home is the
+  invitation. The band keeps `id="contact"` so `/#contact` and the scroll-spy
+  still resolve.
 - **Projects are three real repos**, in Ramiro's order of weight:
   CompuMundoHMR, CABA+ (AppMunicipal), Game Shop (video-game-ecommerce).
   Filled 2026-09-13, replacing the four empty slots. A fourth card — the
@@ -105,8 +124,14 @@ Thesis: *the page paints itself the way a terminal paints a buffer.*
   Don't replace it with conditional rendering — the page will jump.
 - Sections/cards: fade + rise on entry, once, staggered `--i * 70ms`.
 - Section headings: an underline rule draws itself in.
+- **The hero boot plays once per page load, not per mount.** `booted` in
+  `typewriter.ts` is module-level and snapshotted at mount; without it the full
+  ~4s sequence replayed every time you came back from `/contact`, which reads
+  as a bug. A real reload still gets the show.
 - **Every effect has a `prefers-reduced-motion` path.** The caret goes solid —
-  blinking is the one effect with a real accessibility cost.
+  blinking is the one effect with a real accessibility cost. Note that a JS
+  `scrollIntoView({behavior:'smooth'})` ignores the CSS reset, so `Layout`
+  checks `matchMedia` itself before choosing a behavior.
 
 ---
 
@@ -172,6 +197,26 @@ accident:
 ---
 
 ## Gotchas
+
+- **The fade observer must re-run per route** (`Layout.tsx`, deps
+  `[lang, pathname]`). `[data-fade]` starts at `opacity: 0`; a route whose
+  elements mount after the observer was built renders permanently invisible.
+  This is the single easiest way to ship a blank `/contact`.
+- **The scroll effect keys on `location.key`, not `pathname + hash`.**
+  Navigating to the hash you are already on produces an identical location, so
+  a `[pathname, hash]` dep would never fire and `open projects` twice in a row
+  would do nothing the second time.
+- **Every in-page anchor goes through `<Link>`.** A raw `<a href="#x">` fires
+  `hashchange`, not `popstate`, so BrowserRouter never sees it and
+  `location.hash` goes stale. The skip link is the one exception — it targets
+  `#main` and must work with no JS.
+- **The shell dialog is opened imperatively.** Rendering `<dialog open>` gives
+  a NON-modal dialog: no backdrop, no focus trap, no inert background. And
+  `m-auto` is load-bearing — Tailwind's preflight zeroes the UA's
+  `dialog { margin: auto }`, which otherwise pins the panel to the top-left.
+- **`~` is a dead key on Latin-American keyboard layouts.** That is why
+  Ctrl/⌘+K exists as a second binding and why the nav button is never hidden
+  behind a breakpoint.
 
 - **`data.ts` is the only place content lives.** Never hardcode a user-facing
   string in a component; it breaks the ES translation silently.

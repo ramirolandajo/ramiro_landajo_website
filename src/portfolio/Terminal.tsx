@@ -8,6 +8,7 @@ import {
   links,
   ls,
   monogram,
+  nav,
   roles,
   stack,
   story,
@@ -25,15 +26,29 @@ import {
 
 type Line = { id: number; kind: 'in' | 'out' | 'err' | 'dim' | 'acc'; text: string }
 
-const TARGETS = ['about', 'work', 'stack', 'education', 'contact']
+/* Derived, never hand-written: this list was stale for months because the
+   section ids were renamed and the literal array here was not. */
+const TARGETS = nav.map((n) => n.id)
+
+/* The words `help` teaches as commands double as section names in people's
+   heads, so `open work` should not be an error. */
+const ALIASES: Record<string, string> = {
+  about: 'home',
+  work: 'experience',
+  exp: 'experience',
+  stack: 'expertise',
+  skills: 'expertise',
+  edu: 'experience',
+  education: 'experience',
+}
 const pad = (s: string, n: number) => s + ' '.repeat(Math.max(0, n - s.length))
 
 const HELP: Record<Lang, string[]> = {
   en: [
     'whoami          the short version',
     'neofetch        system info, but the system is me',
-    'ls              sections on this page',
-    'open <section>  scroll to one',
+    'ls              sections of the site',
+    'open <section>  go to one',
     'work            roles, technical first',
     'stack [group]   what I build with',
     'edu             degrees and certifications',
@@ -44,7 +59,7 @@ const HELP: Record<Lang, string[]> = {
   es: [
     'whoami          la versión corta',
     'neofetch        info del sistema, pero el sistema soy yo',
-    'ls              secciones de esta página',
+    'ls              secciones del sitio',
     'open <sección>  ir a una',
     'work            roles, primero lo técnico',
     'stack [grupo]   con qué construyo',
@@ -103,7 +118,18 @@ function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
     case 'cd':
     case 'open': {
       if (!arg) return { out: [O(es ? 'uso: open <sección>' : 'usage: open <section>', 'err')] }
-      const match = TARGETS.find((s) => s.startsWith(arg))
+      /* Exact first, then prefix. `expertise` and `experience` share four
+         letters, so a bare prefix match made one of them unreachable. */
+      const wanted = ALIASES[arg] ?? arg
+      const hits = TARGETS.includes(wanted) ? [wanted] : TARGETS.filter((s) => s.startsWith(wanted))
+      if (hits.length > 1)
+        return {
+          out: [
+            O(es ? `open: ambiguo: ${args[0]}` : `open: ambiguous: ${args[0]}`, 'err'),
+            O(hits.join(', '), 'dim'),
+          ],
+        }
+      const match = hits[0]
       if (!match)
         return {
           out: [
@@ -189,7 +215,7 @@ function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
 const TONE: Record<Line['kind'], string> = {
   in: 'text-[var(--fg)]',
   out: 'text-[var(--dim)]',
-  err: 'text-[var(--warn)]',
+  err: 'text-[var(--bad)]',
   dim: 'text-[var(--faint)]',
   acc: 'text-[var(--acc)]',
 }

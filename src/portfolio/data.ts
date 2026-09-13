@@ -432,11 +432,14 @@ export const form = {
   errMessage: { en: 'Add a message so I know what this is about.', es: 'Escribí un mensaje así sé de qué se trata.' },
 } as const
 
-export const nav = [
+/* `to` marks an item that is its own route rather than a section of the home
+   page. Everything without it is scrolled to; contact is navigated to. */
+export type NavItem = { id: string; n: string; en: string; es: string; to?: string }
+
+export const nav: NavItem[] = [
   { id: 'home', n: '01', en: 'home', es: 'inicio' },
   { id: 'expertise', n: '02', en: 'expertise', es: 'skills' },
   { id: 'experience', n: '03', en: 'experience', es: 'experiencia' },
   { id: 'projects', n: '04', en: 'projects', es: 'proyectos' },
-  { id: 'shell', n: '05', en: 'shell', es: 'consola' },
-  { id: 'contact', n: '06', en: 'contact', es: 'contacto' },
+  { id: 'contact', n: '05', en: 'contact', es: 'contacto', to: '/contact' },
 ]
