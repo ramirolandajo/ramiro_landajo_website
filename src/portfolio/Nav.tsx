@@ -19,8 +19,13 @@ export function Nav({
 }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--rule)] bg-[var(--bg)]/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[88rem] items-center gap-4 px-4 py-3 sm:px-7">
-        <Link to="/" className="shrink-0 text-[0.86rem] font-bold tracking-[-0.02em]">
+      {/* Three columns rather than auto margins: `mx-auto` on the nav and
+          `ml-auto` on the controls split the slack three ways, which parks the
+          list left of centre. Equal 1fr flanks centre it for real. The columns
+          are pinned explicitly: below lg the nav is display:none, and with
+          auto-placement the controls would fall into the middle track. */}
+      <div className="mx-auto grid max-w-[88rem] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3 sm:px-7">
+        <Link to="/" className="col-start-1 justify-self-start text-[0.86rem] font-bold tracking-[-0.02em]">
           {identity.name.split(' ')[0].toLowerCase()}
           <span className="text-[var(--acc)]">.</span>
           <span className="caret text-[var(--acc)]">_</span>
@@ -28,7 +33,7 @@ export function Nav({
 
         {/* Numbered comment-style nav, lifted from the Tamal Sen reference —
             it is the cheapest possible way to say "this person writes code". */}
-        <nav aria-label={lang === 'es' ? 'Secciones' : 'Sections'} className="mx-auto hidden lg:block">
+        <nav aria-label={lang === 'es' ? 'Secciones' : 'Sections'} className="col-start-2 hidden justify-self-center lg:block">
           <ul className="flex items-start gap-7">
             {nav.map((n) => {
               const on = active === n.id
@@ -55,7 +60,7 @@ export function Nav({
           </ul>
         </nav>
 
-        <div className="ml-auto flex shrink-0 items-center gap-3">
+        <div className="col-start-3 flex shrink-0 items-center gap-3 justify-self-end">
           {/* The shell's only reliable affordance: the `~` hotkey is a dead
               key on Latin-American layouts, and phones have no keyboard. */}
           <button
