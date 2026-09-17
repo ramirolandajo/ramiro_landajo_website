@@ -195,7 +195,7 @@ function run(raw: string, ctx: Ctx): { out: Out[]; clear?: boolean } {
       }
 
     case 'contact':
-      return { out: links.map((l) => O(`  ${pad(ls(l.label, lang), 10)} ${l.value}`)) }
+      return { out: links.map((l) => O(`  ${pad(ls(l.label, lang), 10)} ${ls(l.value, lang)}`)) }
 
     case 'lang': {
       const next = arg === 'en' || arg === 'es' ? arg : lang === 'en' ? 'es' : 'en'

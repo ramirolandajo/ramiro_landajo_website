@@ -370,19 +370,22 @@ export function ContactCta({ lang }: { lang: Lang }) {
 
           {/* The form is one click away; these are zero. */}
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem]">
-            {direct.map((l) => (
-              <li key={l.id}>
-                <a
-                  href={l.href}
-                  target={l.href.startsWith('http') ? '_blank' : undefined}
-                  rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]"
-                >
-                  <span className="text-[var(--rule2)]">// </span>
-                  {l.value}
-                </a>
-              </li>
-            ))}
+            {direct.map((l) => {
+              const href = ls(l.href, lang)
+              return (
+                <li key={l.id}>
+                  <a
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noreferrer' : undefined}
+                    className="text-[var(--faint)] transition-colors duration-200 hover:text-[var(--acc)]"
+                  >
+                    <span className="text-[var(--rule2)]">// </span>
+                    {ls(l.value, lang)}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>

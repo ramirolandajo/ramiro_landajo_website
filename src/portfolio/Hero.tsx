@@ -109,11 +109,11 @@ export function Hero({ lang }: { lang: Lang }) {
 
             <div className="mt-8 flex flex-wrap items-center gap-2.5">
               <a
-                href={identity.cv}
+                href={t(identity.cv, lang)}
                 className="inline-flex items-center gap-2 rounded-lg bg-[var(--acc)] px-5 py-3 text-[0.8rem] font-bold text-[var(--acc-ink)] transition-transform duration-200 hover:-translate-y-0.5"
               >
                 <FileDown size={15} aria-hidden="true" />
-                {lang === 'es' ? 'Ver CV' : 'View CV'}
+                {lang === 'es' ? 'Ver CV' : 'View Résumé'}
               </a>
               {[
                 { href: identity.github, Icon: GithubMark, label: 'GitHub' },
