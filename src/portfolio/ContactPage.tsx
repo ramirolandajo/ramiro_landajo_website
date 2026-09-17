@@ -166,26 +166,29 @@ function ContactForm({ lang }: { lang: Lang }) {
 
         <div data-fade style={{ ['--i' as string]: 1 }} className="flex flex-col gap-3">
           <ul className="grid gap-3">
-            {links.map((l) => (
-              <li key={l.id}>
-                <a
-                  href={l.href}
-                  target={l.href.startsWith('http') ? '_blank' : undefined}
-                  rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="group/l flex items-center justify-between gap-3 rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-3.5 transition-colors duration-200 hover:border-[var(--acc)]"
-                >
-                  <span className="min-w-0">
-                    <span className="block text-[0.8rem] font-bold">{ls(l.label, lang)}</span>
-                    <span className="block truncate text-[0.7rem] text-[var(--faint)]">{l.value}</span>
-                  </span>
-                  <ArrowUpRight
-                    size={15}
-                    aria-hidden="true"
-                    className="shrink-0 text-[var(--faint)] transition-transform duration-200 group-hover/l:-translate-y-0.5 group-hover/l:text-[var(--acc)]"
-                  />
-                </a>
-              </li>
-            ))}
+            {links.map((l) => {
+              const href = ls(l.href, lang)
+              return (
+                <li key={l.id}>
+                  <a
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noreferrer' : undefined}
+                    className="group/l flex items-center justify-between gap-3 rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-3.5 transition-colors duration-200 hover:border-[var(--acc)]"
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-[0.8rem] font-bold">{ls(l.label, lang)}</span>
+                      <span className="block truncate text-[0.7rem] text-[var(--faint)]">{ls(l.value, lang)}</span>
+                    </span>
+                    <ArrowUpRight
+                      size={15}
+                      aria-hidden="true"
+                      className="shrink-0 text-[var(--faint)] transition-transform duration-200 group-hover/l:-translate-y-0.5 group-hover/l:text-[var(--acc)]"
+                    />
+                  </a>
+                </li>
+              )
+            })}
           </ul>
 
           <div className="mt-auto rounded-xl border border-[var(--rule)] bg-[var(--card)] px-5 py-3.5">

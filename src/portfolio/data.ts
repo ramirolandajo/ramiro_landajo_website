@@ -32,7 +32,10 @@ export const identity = {
   phone: '+54 11 6681-0500',
   github: 'https://github.com/ramirolandajo',
   linkedin: 'https://linkedin.com/in/ramirolandajo',
-  cv: '/Landajo_Ramiro_CV.pdf',
+  /* The résumé exists in both languages; each one is served to the reader who
+     is already reading the site in it. */
+  cv: { en: '/Landajo_Ramiro_Resume.pdf', es: '/Landajo_Ramiro_CV.pdf' },
+  cvFile: { en: 'Landajo_Ramiro_Resume.pdf', es: 'Landajo_Ramiro_CV.pdf' },
   availability: { en: 'Open to work', es: 'Disponible para trabajar' },
 } as const
 
@@ -225,11 +228,11 @@ export const languages = [
   { name: { en: 'English', es: 'Inglés' }, level: 'C2', note: { en: 'Cambridge Proficiency (CPE)', es: 'Cambridge Proficiency (CPE)' } },
 ]
 
-export const links = [
+export const links: { id: string; label: string | L; value: string | L; href: string | L }[] = [
   { id: 'github', label: 'GitHub', value: 'github.com/ramirolandajo', href: identity.github },
   { id: 'linkedin', label: 'LinkedIn', value: 'linkedin.com/in/ramirolandajo', href: identity.linkedin },
   { id: 'email', label: { en: 'Email', es: 'Email' }, value: identity.email, href: `mailto:${identity.email}` },
-  { id: 'cv', label: { en: 'Résumé', es: 'CV' }, value: 'Landajo_Ramiro_CV.pdf', href: identity.cv },
+  { id: 'cv', label: { en: 'Résumé', es: 'CV' }, value: identity.cvFile, href: identity.cv },
 ]
 
 /* ---------------------------------------------------------------------------
