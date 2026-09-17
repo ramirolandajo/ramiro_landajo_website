@@ -50,7 +50,8 @@ src/portfolio/
   Sections.tsx                 sections 02–05 (Expertise, Experience, Projects, ContactCta)
   Terminal.tsx                 the working shell + its command registry
   BrandIcons.tsx               GitHub / LinkedIn SVG marks
-public/Landajo_Ramiro_CV.pdf   linked from the hero and contact
+public/Landajo_Ramiro_CV.pdf   Spanish CV — served when lang is es
+public/Landajo_Ramiro_Resume.pdf   English résumé — served when lang is en
 public/projects/*.webp         project screenshots, cropped from each repo's README
 ```
 
